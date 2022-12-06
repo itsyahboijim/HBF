@@ -5,10 +5,10 @@ import websiteConfig from './config/websiteConfig';
 import apiRoute from './routes/apiRoute';
 import interfaceRoute from './routes/interfaceRoute';
 
-const ejs = require('ejs');
-
 import {Request, Response} from 'express';
 import express = require('express');
+
+const ejs = require('ejs');
 const app = express();
 
 app.engine("html", ejs.renderFile);

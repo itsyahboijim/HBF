@@ -8,6 +8,11 @@
 </head>
 <body>
     <h1>homepage</h1>
+
+    <% hospitals.forEach(hospital => { %>
+        <p> <%= hospital.name %> </p> 
+    <% }) %>
+
     <a href="javascript:void(0);" onclick="GoToAccount();">Login</a>
 </body>
 <script>
