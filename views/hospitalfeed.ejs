@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Hospital Bed Finder</title>
 </head>
 <body>
     <h1>homepage</h1>
@@ -13,14 +13,13 @@
         <p> <%= hospital.name %> </p> 
     <% }) %>
 
-    <a href="javascript:void(0);" onclick="GoToAccount();">Login</a>
+    <a href="javascript:void(0);" onclick="Login();">Login</a>
 </body>
 <script>
     let baseUrl = window.location.origin;
 
-    // For testing
-    function GoToAccount(){
-        window.location.href = `${baseUrl}/interface/account`;
+    function Login(){
+        window.location.href = `${baseUrl}/interface/login`;
         return;
     }
 </script>

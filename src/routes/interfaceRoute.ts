@@ -1,10 +1,11 @@
 //@ts-nocheck
 import { Router } from "express";
-import { testHospitalFeed, testLogin } from "../controller/pageController";
+import { hospitalFeed, login, account } from "../controller/pageController";
 
 const router = Router();
 
-router.get('/hospitalFeed', testHospitalFeed);
-router.get('/account', testLogin);
+router.get("/hospitalFeed", hospitalFeed);
+router.get("/login", login);
+router.get("/account", account);
 
 export default router;
