@@ -8,5 +8,51 @@
 </head>
 <body>
     <h1>Login</h1>
+    <form id="loginForm" method="post">
+        <label for="email">Email:</label>
+        <input required type="text" name="email">
+
+        <label for="password">Password:</label>
+        <input required type="password" name="password">
+
+        <div id="loginButton"><a href="javascript:void(0);">Login</a></div>
+        <p id="loginError"></p>
+    </form>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        const baseUrl = window.location.origin;
+    
+        // Event listener for sign in
+        document.getElementById("loginButton").addEventListener("click", async () => {
+            const formData = formArrayToObject($("#loginForm").serializeArray());
+            const res = await fetch(baseUrl + "/api/login", {
+                method: "post",
+                body: JSON.stringify(formData),
+                mode: "cors",
+                headers: new Headers({
+                    "Content-Type": "application/json",
+                }),
+            });
+            const resBody = await res.json();
+            if (resBody.success){
+                window.location.href = `${baseUrl}/interface/account`;
+                return;
+            }
+            document.getElementById("loginError").innerText = resBody.error;
+        });
+
+        // Event listener for sign up (NOT DONE)
+
+        // Function to convert form data to an object
+        function formArrayToObject(values){
+            const jsonObj = {};
+            for (const v of values){
+                jsonObj[v.name] = v.value;
+            }
+            return jsonObj;
+        }
+    });
+</script>
 </html>

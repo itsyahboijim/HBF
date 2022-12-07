@@ -1,5 +1,4 @@
-import { Response } from "express";
-import websiteConfig from "../config/websiteConfig";
+import { Request, Response } from "express";
 import { Database } from "../database/database";
 
 const db = new Database("hospitals");
