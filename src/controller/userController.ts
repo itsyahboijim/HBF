@@ -11,6 +11,7 @@ export async function login(req: Request, res: Response){
             success: false,
             error: "Please fill in all the fields.",
         });
+        return;
     }
 
     const profile = await db.collection.findOne({email: email});
@@ -37,6 +38,7 @@ export async function login(req: Request, res: Response){
         success: true,
         ...profile,
     });
+    return;
 }
 
 export async function register(req: Request, res: Response){
@@ -87,4 +89,5 @@ export async function register(req: Request, res: Response){
         success: true,
         ...account,
     });
+    return;
 }
