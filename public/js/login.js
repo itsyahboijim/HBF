@@ -1,8 +1,11 @@
-$(document).ready(function(){
+$(function(){
     const baseUrl = window.location.origin;
 
     // Event listener for sign in
-    document.getElementById("loginButton").addEventListener("click", async () => {
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        console.log("Working1");
+        
         const formData = formArrayToObject($("#loginForm").serializeArray());
         const res = await fetch(baseUrl + "/api/login", {
             method: "post",
@@ -21,7 +24,10 @@ $(document).ready(function(){
     });
 
     // Event listener for sign up (NOT DONE)
-    document.getElementById("signUpButton").addEventListener("click", async() => {
+    document.getElementById("signUpForm").addEventListener("submit", async(e) => {
+        e.preventDefault();
+        console.log("Working2");
+        
         const formData = formArrayToObject($("#signUpForm").serializeArray());
         const res = await fetch(baseUrl + "/api/register", {
             method: "post",
