@@ -4,7 +4,6 @@ $(function(){
     // Event listener for sign in
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
         e.preventDefault();
-        console.log("Working1");
         
         const formData = formArrayToObject($("#loginForm").serializeArray());
         const res = await fetch(baseUrl + "/api/login", {
@@ -23,10 +22,47 @@ $(function(){
         document.getElementById("loginError").innerText = resBody.error;
     });
 
-    // Event listener for sign up (NOT DONE)
+    let passwordErrors = [];
+    function hasUppercase(str){
+        return (/[A-Z]/.test(str));
+    }
+    function hasLowerCase(str){
+        return (/[a-z]/.test(str));
+    }
+    function hasSpecialChar(str){
+        const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+        return specialChars.test(str);
+    }
+    function checkPassword(e){
+        $("#passwordErrors").empty();
+
+        passwordErrors = [];
+        if (e.target.textLength < 8){
+            passwordErrors.push("Password must be longer than 8 characters.");
+        }
+        if (!hasUppercase(e.target.value)){
+            passwordErrors.push("Password must have at least one uppercase character.");
+        }
+        if (!hasLowerCase(e.target.value)){
+            passwordErrors.push("Password must have at least one lowercase character.");
+        }
+        if (!hasSpecialChar(e.target.value)){
+            passwordErrors.push("Password must have at least one special character.");
+        }
+
+        let passwordErrorList = document.getElementById("passwordErrors");
+        for (let error of passwordErrors){
+            let li = document.createElement("li");
+            li.appendChild(document.createTextNode(error));
+            passwordErrorList.appendChild(li);
+        }
+    }
+    document.getElementById("signUpPassword").addEventListener("input", checkPassword);
+
     document.getElementById("signUpForm").addEventListener("submit", async(e) => {
         e.preventDefault();
-        console.log("Working2");
+
+        if (passwordErrors.length > 0) return;
         
         const formData = formArrayToObject($("#signUpForm").serializeArray());
         const res = await fetch(baseUrl + "/api/register", {
