@@ -8,5 +8,21 @@
 </head>
 <body>
     <p>Account</p>
+    
+    <a href="javascript:void(0);" onclick="Logout()">Logout</a>
+    <a href="javascript:void(0);" onclick="BackToHomepage()">Back to home</a>
 </body>
+<script>
+    let baseUrl = window.location.origin;
+
+    function Logout(){
+        window.location.href = `${baseUrl}/api/logout`;
+        return;
+    }
+
+    function BackToHomepage(){
+        window.location.href = `${baseUrl}/interface/hospitalFeed`;
+        return;
+    }
+</script>
 </html>

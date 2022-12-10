@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
+import { isJSDocUnknownTag } from 'typescript';
 import { Database } from '../database/database';
+import jwt from 'jsonwebtoken';
+import jwtConfig from '../config/jwtConfig';
+import websiteConfig from '../config/websiteConfig';
 
 const db = new Database("hospitals");
 
@@ -33,12 +37,26 @@ export async function login(req: Request, res: Response){
         return;
     }
 
-    delete profile.password;
+    const accessToken = jwt.sign(
+        {
+            _id: profile._id.toString(),
+            iat: Date.now(),
+        },
+        jwtConfig.secret,
+        {
+            expiresIn: jwtConfig.duration,
+        }
+    );
+    res.cookie("authorization", accessToken);
     res.status(200).send({
         success: true,
-        ...profile,
     });
     return;
+}
+
+export async function logout(req: Request, res: Response){
+    res.clearCookie("authorization");
+    res.redirect(websiteConfig.baseUrl + "/interface/login");
 }
 
 export async function register(req: Request, res: Response){
@@ -83,11 +101,21 @@ export async function register(req: Request, res: Response){
         }
     }
     account.availableBeds = Number(account.availableBeds);
-    await db.collection.insertOne(account);
-    delete account.password;
+
+    const insertStatus = await db.collection.insertOne(account);
+    const accessToken = jwt.sign(
+        {
+            _id: insertStatus.insertedId.toString(),
+            iat: Date.now(),
+        },
+        jwtConfig.secret,
+        {
+            expiresIn: jwtConfig.duration,
+        }
+    );
+    res.cookie("authorization", accessToken);
     res.status(200).send({
         success: true,
-        ...account,
     });
     return;
 }

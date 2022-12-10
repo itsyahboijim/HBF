@@ -13,13 +13,13 @@
         <p> <%= hospital.name %> </p> 
     <% }) %>
 
-    <a href="javascript:void(0);" onclick="Login();">Login</a>
+    <a href="javascript:void(0);" onclick="Account();">Account</a>
 </body>
 <script>
     let baseUrl = window.location.origin;
 
-    function Login(){
-        window.location.href = `${baseUrl}/interface/login`;
+    function Account(){
+        window.location.href = `${baseUrl}/interface/account`;
         return;
     }
 </script>
