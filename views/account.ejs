@@ -13,9 +13,12 @@
     <%= contactNum %> 
     <%= maxBeds %> 
     <p id="availableBedCount"><%= availableBeds %></p>
-    <button onclick="ChangeAvailableBeds(1)">+1</button>
-    <button onclick="ChangeAvailableBeds(-1)">-1</button>
-    
+    <button onclick="ChangeAvailableBeds('+')">+1</button>
+    <button onclick="ChangeAvailableBeds('-')">-1</button>
+    <label for="customBedCount"></label>
+    <input type="text" name="customBedCount" id="customBedCount">
+    <button onclick="SubmitCustomBedCount('+')">+</button>
+    <button onclick="SubmitCustomBedCount('-')">-</button>
     
     <a href="javascript:void(0);" onclick="Logout()">Logout</a>
     <a href="javascript:void(0);" onclick="BackToHomepage()">Back to home</a>
@@ -33,11 +36,34 @@
         return;
     }
 
+    let changeCounter = 0;
+    let requestTimer = null;
     const availableBedCount = document.getElementById("availableBedCount");
-    function ChangeAvailableBeds(count){
-        availableBedCount.innerText = parseInt(availableBedCount.innerText) + count;
+    const customBedCount = document.getElementById("customBedCount");
+    function ChangeAvailableBeds(sign){
+        changeCounter += parseInt(`${sign}1`);
+        availableBedCount.innerText = parseInt(availableBedCount.innerText) + parseInt(`${sign}1`);
+
+        if (requestTimer == null){
+            requestTimer = setTimeout(SubmitChangeRequest, 3000);
+        }
+
+        return;
+    }
+    
+    function SubmitCustomBedCount(sign){
+        changeCounter += parseInt(`${sign}${customBedCount.value}`);
+        availableBedCount.innerText = parseInt(availableBedCount.innerText) + parseInt(`${sign}${customBedCount.value}`);
         
-        const countObj = {changeValue: count};
+        if (requestTimer == null){
+            requestTimer = setTimeout(SubmitChangeRequest, 3000);
+        }
+
+        return;
+    }
+
+    async function SubmitChangeRequest(){
+        const countObj = {changeValue: changeCounter};
         fetch(baseUrl + "/api/changeBedValue", {
             method: "post",
             body: JSON.stringify(countObj),
@@ -46,6 +72,12 @@
                 "Content-Type": "application/json",
             }),
         });
+
+        changeCounter = 0;
+        clearTimeout(requestTimer);
+        requestTimer = null;
+        return;
     }
+
 </script>
 </html>

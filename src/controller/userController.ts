@@ -125,10 +125,13 @@ export async function changeBedValue(req: RequestWithID, res: Response){
     const { changeValue } = req.body as Record<string, any>;
     
     if (!changeValue){
-        console.log("No received integer to change bed value with.");
+        console.log("No received integer to change bed value with: " + changeValue);
         return;
     }
 
     const hospitalID = ObjectId(req._id);
     db.collection.updateOne({_id: hospitalID}, { $inc: { availableBeds: changeValue }});
+
+    res.end();
+    return;
 }
