@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
-import { isJSDocUnknownTag } from 'typescript';
 import { Database } from '../database/database';
 import jwt from 'jsonwebtoken';
 import jwtConfig from '../config/jwtConfig';
 import websiteConfig from '../config/websiteConfig';
+import { RequestWithID } from '../types';
 
+const { ObjectId } = require('mongodb');
 const db = new Database("hospitals");
 
 export async function login(req: Request, res: Response){
@@ -118,4 +119,16 @@ export async function register(req: Request, res: Response){
         success: true,
     });
     return;
+}
+
+export async function changeBedValue(req: RequestWithID, res: Response){
+    const { changeValue } = req.body as Record<string, any>;
+    
+    if (!changeValue){
+        console.log("No received integer to change bed value with.");
+        return;
+    }
+
+    const hospitalID = ObjectId(req._id);
+    db.collection.updateOne({_id: hospitalID}, { $inc: { availableBeds: changeValue }});
 }

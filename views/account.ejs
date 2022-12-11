@@ -12,7 +12,10 @@
     <%= location %>
     <%= contactNum %> 
     <%= maxBeds %> 
-    <%= availableBeds %> 
+    <p id="availableBedCount"><%= availableBeds %></p>
+    <button onclick="ChangeAvailableBeds(1)">+1</button>
+    <button onclick="ChangeAvailableBeds(-1)">-1</button>
+    
     
     <a href="javascript:void(0);" onclick="Logout()">Logout</a>
     <a href="javascript:void(0);" onclick="BackToHomepage()">Back to home</a>
@@ -28,6 +31,21 @@
     function BackToHomepage(){
         window.location.href = `${baseUrl}/interface/hospitalFeed`;
         return;
+    }
+
+    const availableBedCount = document.getElementById("availableBedCount");
+    function ChangeAvailableBeds(count){
+        availableBedCount.innerText = parseInt(availableBedCount.innerText) + count;
+        
+        const countObj = {changeValue: count};
+        fetch(baseUrl + "/api/changeBedValue", {
+            method: "post",
+            body: JSON.stringify(countObj),
+            mode: "cors",
+            headers: new Headers({
+                "Content-Type": "application/json",
+            }),
+        });
     }
 </script>
 </html>
