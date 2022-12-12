@@ -11,6 +11,7 @@
 
     <% hospitals.forEach(hospital => { %>
         <p> <%= hospital.name %> </p> 
+        <p id="<%= hospital._id %>_availableBeds"><%= hospital.availableBeds %> </p>
     <% }) %>
 
     <a href="javascript:void(0);" onclick="Account();">Account</a>
@@ -22,5 +23,16 @@
         window.location.href = `${baseUrl}/interface/account`;
         return;
     }
+
+    function UpdateHospital(e){
+        console.log(`Update received: ${e.data}`);
+        const hospitalData = JSON.parse(e.data);
+
+        let availableHospitalBed = document.getElementById(`${hospitalData.id}_availableBeds`);
+        availableHospitalBed.innerText = parseInt(availableHospitalBed.innerText) + hospitalData.changeValue;
+    }
+
+    let hospitalSource = new EventSource(`${baseUrl}/api/streamHospitalUpdates`);
+    hospitalSource.onmessage = UpdateHospital;
 </script>
 </html>

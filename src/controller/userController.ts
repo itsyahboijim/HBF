@@ -8,6 +8,8 @@ import { RequestWithID } from '../types';
 const { ObjectId } = require('mongodb');
 const db = new Database("hospitals");
 
+let clients: any[] = [];
+
 export async function login(req: Request, res: Response){
     const { email, password } = req.body as Record<string, any>;
     
@@ -131,7 +133,42 @@ export async function changeBedValue(req: RequestWithID, res: Response){
 
     const hospitalID = ObjectId(req._id);
     db.collection.updateOne({_id: hospitalID}, { $inc: { availableBeds: changeValue }});
-
     res.end();
+
+    const updateObj = {
+        id: hospitalID,
+        changeValue: changeValue,
+    }
+    sendHospitalUpdates(updateObj);
+    
     return;
+}
+
+export async function streamHospitalUpdates(req: Request, res: Response){
+    const headers = {
+        "Content-Type": "text/event-stream",
+        "Connection": "keep-alive",
+        "Cache-Control": "no-store",
+    }
+    res.writeHead(200, headers);
+
+    const clientID = Date.now();
+    const clientObj = {
+        id: clientID,
+        res,
+    };
+    clients.push(clientObj);
+    console.log(`${clientID}: Connection established.`);
+
+    req.on("close", () => {
+        clients = clients.filter(client => client.id !== clientID);
+        console.log(`${clientID}: Connection closed.`);
+    });
+}
+
+async function sendHospitalUpdates(updateData: any){
+    for (let client of clients){
+        client.res.write(`data: ${JSON.stringify(updateData)}\n\n`);
+    }
+    console.log(`Sent update: ${updateData}`);
 }
