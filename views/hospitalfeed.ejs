@@ -8,11 +8,12 @@
 </head>
 <body>
     <h1>homepage</h1>
-
-    <% hospitals.forEach(hospital => { %>
-        <p> <%= hospital.name %> </p> 
-        <p id="<%= hospital._id %>_availableBeds"><%= hospital.availableBeds %> </p>
-    <% }) %>
+    <div id="hospitalsDiv">
+        <% hospitals.forEach(hospital => { %>
+            <p> <%= hospital.name %> </p> 
+            <p id="<%= hospital._id %>_availableBeds"><%= hospital.availableBeds %> </p>
+        <% }) %>
+    </div>
 
     <a href="javascript:void(0);" onclick="Account();">Account</a>
 </body>
@@ -27,6 +28,27 @@
     function UpdateHospital(e){
         console.log(`Update received: ${e.data}`);
         const hospitalData = JSON.parse(e.data);
+
+        if (hospitalData.name){
+            // Create new hospital entry
+            let newHospital = document.createElement('div');
+            
+            // New hospital name element
+            let hospitalName = document.createElement('p');
+            hospitalName.innerText = hospitalData.name;
+            newHospital.appendChild(hospitalName);
+            
+            // New hospital available bed count element
+            let hospitalAvailableBedCount = document.createElement('p');
+            hospitalAvailableBedCount.setAttribute('id', `${hospitalData._id}_availableBeds`);
+            hospitalAvailableBedCount.innerText = hospitalData.availableBeds;
+            newHospital.appendChild(hospitalAvailableBedCount);
+
+            // Append to list of hospitals
+            let hospitalsDiv = document.getElementById("hospitalsDiv");
+            hospitalsDiv.appendChild(newHospital);
+            return;
+        }
 
         let availableHospitalBed = document.getElementById(`${hospitalData.id}_availableBeds`);
         availableHospitalBed.innerText = parseInt(availableHospitalBed.innerText) + hospitalData.changeValue;

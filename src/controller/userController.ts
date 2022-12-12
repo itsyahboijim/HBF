@@ -120,6 +120,11 @@ export async function register(req: Request, res: Response){
     res.status(200).send({
         success: true,
     });
+
+    delete account.email;
+    delete account.password;
+    account._id = insertStatus.insertedId.toString();
+    sendHospitalUpdates(account);
     return;
 }
 
@@ -140,7 +145,7 @@ export async function changeBedValue(req: RequestWithID, res: Response){
         changeValue: changeValue,
     }
     sendHospitalUpdates(updateObj);
-    
+
     return;
 }
 
