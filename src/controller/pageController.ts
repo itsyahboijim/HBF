@@ -8,6 +8,12 @@ const db = new Database("hospitals");
 export async function hospitalFeed(req: Request, res: Response){
     await db.injectSampleData();
     const hospitalInfo = await db.collection.find().toArray();
+
+    for (let hospital of hospitalInfo){
+        delete hospital.email;
+        delete hospital.password;
+    }
+
     const hospitals = { hospitals: hospitalInfo };
     res.render("hospitalfeed", hospitals);
 }
