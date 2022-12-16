@@ -32,7 +32,11 @@ app.get('/', (req: Request, res: Response) => {
     res.redirect('/interface/hospitalFeed');
 });
 
-const port = websiteConfig.port;
-app.listen(port, () =>{
-    console.log(`Server is listening on port ${websiteConfig.port}`);
-});
+module.exports = app;
+
+if (require.main === module){
+    const port = websiteConfig.port;
+    app.listen(port, () =>{
+        console.log(`Server is listening on port ${websiteConfig.port}`);
+    });
+}
