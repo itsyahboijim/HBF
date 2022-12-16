@@ -21,6 +21,7 @@ export async function authenticate(req: Request, res: Response, next: Function){
                 return;
             }
             (req as RequestWithID)._id = userData._id;
+            (req as RequestWithID).validated = userData.validated;
         }
     );
     next();

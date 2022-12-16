@@ -10,8 +10,10 @@
     <h1>homepage</h1>
     <div id="hospitalsDiv">
         <% hospitals.forEach(hospital => { %>
-            <p> <%= hospital.name %> </p> 
-            <p id="<%= hospital._id %>_availableBeds"><%= hospital.availableBeds %> </p>
+            <% if (hospital.validated) { %>
+                <p> <%= hospital.name %> </p> 
+                <p id="<%= hospital._id %>_availableBeds"><%= hospital.availableBeds %> </p>
+            <% } %>
         <% }) %>
     </div>
 
@@ -30,6 +32,7 @@
         const hospitalData = JSON.parse(e.data);
 
         if (hospitalData.name){
+
             // Create new hospital entry
             let newHospital = document.createElement('div');
             

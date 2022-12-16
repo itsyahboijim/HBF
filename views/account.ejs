@@ -8,6 +8,9 @@
 </head>
 <body>
     <p>Account</p>
+    <% if (!validated) { %>
+        <p>Hospital is not validated.</p>
+    <% } %>
     <%= name %>
     <%= location %>
     <%= contactNum %> 

@@ -17,6 +17,10 @@ export class Database{
     }
 
     async injectSampleData(){
+        if (this.collectionName != "hospitals"){
+            return;   
+        }
+
         const sampleData = [
             {
                 email: "ndh@gmail.com",
@@ -25,7 +29,8 @@ export class Database{
                 location: "Naic",
                 contactNum: "***********",
                 maxBeds: 50,
-                availableBeds: 5
+                availableBeds: 5,
+                validated: true,
             },
             {
                 email: "slrh@gmail.com",
@@ -34,7 +39,8 @@ export class Database{
                 location: "Naic",
                 contactNum: "***********",
                 maxBeds: 25,
-                availableBeds: 10
+                availableBeds: 10,
+                validated: true,
             },
             {
                 email: "kpfh@gmail.com",
@@ -43,7 +49,8 @@ export class Database{
                 location: "Trece",
                 contactNum: "***********",
                 maxBeds: 35,
-                availableBeds: 12
+                availableBeds: 12,
+                validated: true,
             },
             {
                 email: "geamh@gmail.com",
@@ -52,7 +59,8 @@ export class Database{
                 location: "Trece",
                 contactNum: "***********",
                 maxBeds: 20,
-                availableBeds: 17
+                availableBeds: 17,
+                validated: true,
             },
             {
                 email: "tsmc@gmail.com",
@@ -61,7 +69,8 @@ export class Database{
                 location: "Tanza",
                 contactNum: "***********",
                 maxBeds: 33,
-                availableBeds: 22
+                availableBeds: 22,
+                validated: false,
             },
             {
                 email: "sndtmh@gmail.com",
@@ -70,14 +79,46 @@ export class Database{
                 location: "Tanza",
                 contactNum: "***********",
                 maxBeds: 55,
-                availableBeds: 25
+                availableBeds: 25,
+                validated: false,
             }
         ];
 
         const dataCheck = await this.collection.findOne();
         if (!dataCheck){
             await this.collection.insertMany(sampleData);
-            console.log(`No data found in database. Injecting sample data.`);        
+            console.log(`No data found in "hospitals" collection. Injecting sample data.`);        
+        }
+    }
+
+    async injectSampleValidatedEmails(){
+        if (this.collectionName != "emailRegister"){
+            return;   
+        }
+
+        const sampleData = [
+            {
+                email: "ndh@gmail.com",
+                validatedOn: Date.now(),
+            },
+            {
+                email: "slrh@gmail.com",
+                validatedOn: Date.now(),
+            },
+            {
+                email: "kpfh@gmail.com",
+                validatedOn: Date.now(),
+            },
+            {
+                email: "geamh@gmail.com",
+                validatedOn: Date.now(),
+            }
+        ];
+
+        const dataCheck = await this.collection.findOne();
+        if (!dataCheck){
+            await this.collection.insertMany(sampleData);
+            console.log(`No data found in "emailRegister" collection. Injecting sample data.`);        
         }
     }
 }

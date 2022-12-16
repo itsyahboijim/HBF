@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { Router } from "express";
-import { hospitalFeed, login, account } from "../controller/pageController";
+import { hospitalFeed, login, account, adminValidate } from "../controller/pageController";
 import { authenticate } from "../middleware/checkAuthorization";
 
 const router = Router();
@@ -9,5 +9,8 @@ const router = Router();
 router.get("/hospitalFeed", hospitalFeed);
 router.get("/login", login);
 router.get("/account", authenticate, account);
+
+// For demonstration purposes
+router.get("/adminValidate", adminValidate);
 
 export default router;

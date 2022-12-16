@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBF Admin - Email Validation</title>
+</head>
+<body>
+    <h1>Validated email addresses</h1>
+    <% approvedEmails.forEach(hospital => { %>
+        <p><%= hospital.email %> </p>
+        <p><%= hospital.validatedOn %> </p>
+    <% }) %>
+    <h1>Unvalidated email addresses</h1>
+    <% unvalidatedHospitals.forEach(hospital => { %>
+        <p><%= hospital.email %> </p>
+        <p><%= hospital.name %> </p>
+    <% }) %>
+
+    <label for="email">Enter validated email: </label>
+    <input type="text" name="email" id="email">
+    <button id="ValidateBtn" onclick="validateEmail()">Validate</button>
+</body>
+<script>
+    let baseUrl = window.location.origin;
+
+    async function validateEmail(){
+        const email = document.getElementById("email").value;
+        const emailObj = {email: email};
+        await fetch(baseUrl + "/api/registerEmail", {
+            method: "post",
+            body: JSON.stringify(emailObj),
+            mode: "cors",
+            headers: new Headers({
+                "Content-Type": "application/json",
+            }),
+        });
+        window.location.reload();
+    }
+</script>
+</html>

@@ -7,6 +7,7 @@ import { RequestWithID } from '../types';
 
 const { ObjectId } = require('mongodb');
 const db = new Database("hospitals");
+const emailRegisterDb = new Database("emailRegister");
 
 let clients: any[] = [];
 
@@ -43,6 +44,7 @@ export async function login(req: Request, res: Response){
     const accessToken = jwt.sign(
         {
             _id: profile._id.toString(),
+            validated: profile.validated,
             iat: Date.now(),
         },
         jwtConfig.secret,
@@ -105,6 +107,14 @@ export async function register(req: Request, res: Response){
     }
     account.availableBeds = Number(account.availableBeds);
 
+    const validatedEmails = await emailRegisterDb.collection.find().toArray();
+    account.validated = false;
+    for (let validEmail of validatedEmails){
+        if (validEmail.email == email){
+            account.validated = true;
+        }
+    }
+
     const insertStatus = await db.collection.insertOne(account);
     const accessToken = jwt.sign(
         {
@@ -124,7 +134,9 @@ export async function register(req: Request, res: Response){
     delete account.email;
     delete account.password;
     account._id = insertStatus.insertedId.toString();
-    sendHospitalUpdates(account);
+    if (account.validated){
+        sendHospitalUpdates(account);
+    }
     return;
 }
 
@@ -140,11 +152,13 @@ export async function changeBedValue(req: RequestWithID, res: Response){
     db.collection.updateOne({_id: hospitalID}, { $inc: { availableBeds: changeValue }});
     res.end();
 
-    const updateObj = {
-        id: hospitalID,
-        changeValue: changeValue,
+    if(req.validated){
+        const updateObj = {
+            id: hospitalID,
+            changeValue: changeValue,
+        }
+        sendHospitalUpdates(updateObj);
     }
-    sendHospitalUpdates(updateObj);
 
     return;
 }
@@ -176,4 +190,32 @@ async function sendHospitalUpdates(updateData: any){
         client.res.write(`data: ${JSON.stringify(updateData)}\n\n`);
     }
     console.log(`Sent update: ${updateData}`);
+}
+
+export async function registerEmail(req: Request, res: Response){
+    const { email } = req.body as Record<string, any>;
+    const registerObj = {
+        email,
+        validatedOn: Date.now(),
+    };
+    const statusCheck = await emailRegisterDb.collection.findOne({email: email});
+    if (statusCheck){
+        res.status(400).send({
+            success: false,
+            error: "Email is already registered",
+        });
+        return;
+    }
+
+    emailRegisterDb.collection.insertOne(registerObj);
+    const emailFound = await db.collection.updateOne({email, validated: false}, {$set: {validated: true}});
+    if (emailFound.matchedCount > 0){
+        const account = await db.collection.findOne({email: email});
+        sendHospitalUpdates(account);
+    }
+
+    res.status(200).send({
+        success: true,
+    });
+    return;
 }
