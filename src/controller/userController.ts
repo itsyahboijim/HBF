@@ -135,6 +135,8 @@ export async function register(req: Request, res: Response){
     delete account.password;
     account._id = insertStatus.insertedId.toString();
     if (account.validated){
+        delete account.email;
+        delete account.password;
         sendHospitalUpdates(account);
     }
     return;
@@ -211,7 +213,11 @@ export async function registerEmail(req: Request, res: Response){
     const emailFound = await db.collection.updateOne({email, validated: false}, {$set: {validated: true}});
     if (emailFound.matchedCount > 0){
         const account = await db.collection.findOne({email: email});
-        sendHospitalUpdates(account);
+        if (account){
+            delete account.email;
+            delete account.password;
+            sendHospitalUpdates(account);
+        }
     }
 
     res.status(200).send({

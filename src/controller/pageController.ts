@@ -26,6 +26,11 @@ export async function login(req: Request, res: Response){
 export async function account(req: RequestWithID, res: Response){
     const hospitalID = ObjectId(req._id);
     const hospitalData = await db.collection.findOne({_id: hospitalID});
+    
+    if (hospitalData){
+        delete hospitalData.email;
+        delete hospitalData.password;
+    }
     res.render("account", hospitalData as Object);
 }
 
@@ -35,6 +40,11 @@ export async function adminValidate(req: Request, res: Response){
     const approvedEmails = await emailRegisterDb.collection.find().toArray();
     let unvalidatedHospitals = await db.collection.find().toArray();
     unvalidatedHospitals = unvalidatedHospitals.filter(hospital => !hospital.validated);
+
+    for (let hospital of unvalidatedHospitals){
+        delete hospital.email;
+        delete hospital.password;
+    }
 
     res.render("adminValidate", {
         approvedEmails,
