@@ -31,6 +31,7 @@ export class Database{
                 maxBeds: 50,
                 availableBeds: 5,
                 validated: true,
+                active: true,
             },
             {
                 email: "slrh@gmail.com",
@@ -41,6 +42,7 @@ export class Database{
                 maxBeds: 25,
                 availableBeds: 10,
                 validated: true,
+                active: true,
             },
             {
                 email: "kpfh@gmail.com",
@@ -51,6 +53,7 @@ export class Database{
                 maxBeds: 35,
                 availableBeds: 12,
                 validated: true,
+                active: true,
             },
             {
                 email: "geamh@gmail.com",
@@ -61,6 +64,7 @@ export class Database{
                 maxBeds: 20,
                 availableBeds: 17,
                 validated: true,
+                active: true,
             },
             {
                 email: "tsmc@gmail.com",
@@ -71,6 +75,7 @@ export class Database{
                 maxBeds: 33,
                 availableBeds: 22,
                 validated: false,
+                active: true,
             },
             {
                 email: "sndtmh@gmail.com",
@@ -81,6 +86,7 @@ export class Database{
                 maxBeds: 55,
                 availableBeds: 25,
                 validated: false,
+                active: false,
             }
         ];
 

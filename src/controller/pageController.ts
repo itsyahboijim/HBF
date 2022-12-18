@@ -28,6 +28,12 @@ export async function account(req: RequestWithID, res: Response){
     const hospitalData = await db.collection.findOne({_id: hospitalID});
     
     if (hospitalData){
+        if (!hospitalData.active){
+            res.clearCookie("authorization");
+            res.render("verify");
+            return;
+        }
+
         delete hospitalData.email;
         delete hospitalData.password;
     }
