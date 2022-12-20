@@ -15,12 +15,13 @@
     <%= name %>
     <%= location %>
     <%= contactNum %> 
-    <%= maxBeds %> 
+    <p id="maxBeds"><%= maxBeds %> </p>
     <p id="availableBedCount"><%= availableBeds %></p>
     <button onclick="ChangeAvailableBeds('+')">+1</button>
     <button onclick="ChangeAvailableBeds('-')">-1</button>
     <label for="customBedCount"></label>
-    <input type="text" name="customBedCount" id="customBedCount">
+    <input type="text" name="customBedCount" id="customBedCount" maxlength="6" value="0">
+    <p id="customBedCountError"></p>
     <button onclick="SubmitCustomBedCount('+')">+</button>
     <button onclick="SubmitCustomBedCount('-')">-</button>
     
@@ -42,9 +43,31 @@
 
     let changeCounter = 0;
     let requestTimer = null;
+    const maxBedCount = document.getElementById("maxBeds");
     const availableBedCount = document.getElementById("availableBedCount");
     const customBedCount = document.getElementById("customBedCount");
+    const customBedCountError = document.getElementById("customBedCountError");
+    customBedCount.addEventListener("input", function(event){
+        let inputValue = this.value;
+        inputValue = inputValue.replace(/[^0-9\b]/g,"0");
+        this.value = inputValue;
+    });
+
+    customBedCount.addEventListener("focusout", function(event){
+        if (this.value.length == 0){
+            this.value = "0";
+        }
+    });
+
     function ChangeAvailableBeds(sign){
+        if (parseInt(availableBedCount.innerText) + parseInt(`${sign}1`) > parseInt(maxBedCount.innerText)){
+            if (customBedCountError.innerText == "") customBedCountError.innerText = "The availabled bed count cannot exceed the maximum bed count!";
+            return;
+        }
+        else {
+            if (customBedCountError.innerText != "") customBedCountError.innerText = "";
+        }
+
         changeCounter += parseInt(`${sign}1`);
         availableBedCount.innerText = parseInt(availableBedCount.innerText) + parseInt(`${sign}1`);
 
@@ -56,6 +79,14 @@
     }
     
     function SubmitCustomBedCount(sign){
+        if (parseInt(availableBedCount.innerText) + parseInt(`${sign}${customBedCount.value}`) > parseInt(maxBedCount.innerText)){
+            if (customBedCountError.innerText == "") customBedCountError.innerText = "The availabled bed count cannot exceed the maximum bed count!";
+            return;
+        }
+        else {
+            if (customBedCountError.innerText != "") customBedCountError.innerText = "";
+        }
+
         changeCounter += parseInt(`${sign}${customBedCount.value}`);
         availableBedCount.innerText = parseInt(availableBedCount.innerText) + parseInt(`${sign}${customBedCount.value}`);
         

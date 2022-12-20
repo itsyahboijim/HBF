@@ -24,17 +24,19 @@ $(function(){
         document.getElementById("loginError").innerText = resBody.error;
     });
 
+    // Sign up email input validation
     let signUpEmailError = document.getElementById("emailError");
     function checkEmail(e){
         if (/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/.test(e.target.value)){
-            signUpEmailError.innerText = "";
+            if (signUpEmailError.innerText != "") signUpEmailError.innerText = "";
         }
         else {
-            signUpEmailError.innerText = "Please enter a valid email address.";
+            if (signUpEmailError.innerText == "") signUpEmailError.innerText = "Please enter a valid email address.";
         }
     }
     document.getElementById("signUpEmail").addEventListener("input", checkEmail);
     
+    // Sign up password validation
     let passwordErrors = [];
     function hasUppercase(str){
         return (/[A-Z]/.test(str));
@@ -71,11 +73,53 @@ $(function(){
     }
     document.getElementById("signUpPassword").addEventListener("input", checkPassword);
 
+    // Sign up contact number validation
+    let contactNumberError = document.getElementById("contactNumberError");
+    function checkContactNumber(str){
+        const cellphoneRegex = /^\d{11}$/;
+        return cellphoneRegex.test(str);
+    }
+    document.getElementById("signUpContactNumber").addEventListener("input", function(event) {
+        let inputValue = this.value;
+        inputValue = inputValue.replace(/[^0-9\b]/g,'');
+        this.value = inputValue;
+
+        if (!checkContactNumber(this.value)){
+            if (contactNumberError.innerText == "") contactNumberError.innerText = "Please enter an 11-digit cellphone number.";
+        } else {
+            if (contactNumberError.innerText != "") contactNumberError.innerText = "";
+        }
+    });
+
+    // Bed count validation
+    let maxBeds = document.getElementById("signUpMaxBeds");
+    let availableBeds = document.getElementById("signUpAvailableBeds");
+    let bedCountError = document.getElementById("bedCountError");
+    maxBeds.addEventListener("input", function(event){
+        let inputValue = this.value;
+        inputValue = inputValue.replace(/[^0-9\b]/g,'');
+        this.value = inputValue;
+    });
+    availableBeds.addEventListener("input", function(event){
+        let inputValue = this.value;
+        inputValue = inputValue.replace(/[^0-9\b]/g,'');
+        this.value = inputValue;
+
+        if (parseInt(this.value) > parseInt(maxBeds.value)){
+            if (bedCountError.innerText == "") bedCountError.innerText = "The count of available beds cannot exceed the maximum bed count!";
+        } else {
+            if (bedCountError.innerText != "") bedCountError.innerText = "";
+        }
+    });
+
+    // Event listener for sign up
     document.getElementById("signUpForm").addEventListener("submit", async(e) => {
         e.preventDefault();
 
         if (passwordErrors.length > 0) return;
         if (signUpEmailError.innerText != "") return;
+        if (contactNumberError.innerText != "") return;
+        if (bedCountError.innerText != "") return;
         
         const formData = formArrayToObject($("#signUpForm").serializeArray());
         const res = await fetch(baseUrl + "/api/register", {

@@ -38,13 +38,15 @@
         <input required type="text" name="location">
 
         <label for="contactNum">Contact number:</label>
-        <input required type="text" name="contactNum" inputmode="numeric" pattern="[0-9]*">
+        <input required type="text" name="contactNum" inputmode="numeric" pattern="[0-9]*" maxlength="11" id="signUpContactNumber">
+        <p id="contactNumberError"></p>
 
         <label for="maxBeds">Maximum bed count:</label>
-        <input required type="text" name="maxBeds" inputmode="numeric" pattern="[0-9]*">
+        <input required type="text" name="maxBeds" inputmode="numeric" pattern="[0-9]*" maxlength="6" id="signUpMaxBeds">
 
         <label for="availableBeds">Available bed count:</label>
-        <input type="text" name="availableBeds" inputmode="numeric" pattern="[0-9]*">
+        <input type="text" name="availableBeds" inputmode="numeric" pattern="[0-9]*" maxlength="6" id="signUpAvailableBeds">
+        <p id="bedCountError"></p>
 
         <input type="submit" value="Register">
         <p id="signUpError"></p>
