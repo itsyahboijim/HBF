@@ -20,6 +20,7 @@ export class Database{
         if (this.collectionName != "hospitals"){
             return;   
         }
+        const defaultImagePath = "/images/default.jpeg";
 
         const sampleData = [
             {
@@ -31,6 +32,7 @@ export class Database{
                 maxBeds: 50,
                 availableBeds: 5,
                 validated: true,
+                image: defaultImagePath,
                 active: true,
             },
             {
@@ -42,6 +44,7 @@ export class Database{
                 maxBeds: 25,
                 availableBeds: 10,
                 validated: true,
+                image: defaultImagePath,
                 active: true,
             },
             {
@@ -53,6 +56,7 @@ export class Database{
                 maxBeds: 35,
                 availableBeds: 12,
                 validated: true,
+                image: defaultImagePath,
                 active: true,
             },
             {
@@ -64,6 +68,7 @@ export class Database{
                 maxBeds: 20,
                 availableBeds: 17,
                 validated: true,
+                image: defaultImagePath,
                 active: true,
             },
             {
@@ -75,6 +80,7 @@ export class Database{
                 maxBeds: 33,
                 availableBeds: 22,
                 validated: false,
+                image: defaultImagePath,
                 active: true,
             },
             {
@@ -86,6 +92,7 @@ export class Database{
                 maxBeds: 55,
                 availableBeds: 25,
                 validated: false,
+                image: defaultImagePath,
                 active: false,
             }
         ];

@@ -121,14 +121,12 @@ $(function(){
         if (contactNumberError.innerText != "") return;
         if (bedCountError.innerText != "") return;
         
-        const formData = formArrayToObject($("#signUpForm").serializeArray());
+        const form = document.getElementById("signUpForm");
+        const formData = new FormData(form);
         const res = await fetch(baseUrl + "/api/register", {
             method: "post",
-            body: JSON.stringify(formData),
+            body: formData,
             mode: "cors",
-            headers: new Headers({
-                "Content-Type": "application/json",
-            }),
         });
         const resBody = await res.json();
         if (resBody.success){
