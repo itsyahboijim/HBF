@@ -1,5 +1,5 @@
-const sitePort = 8080;
+const sitePort = 443;
 export default {
     port: sitePort,
-    baseUrl: `http://localhost:${sitePort}`,
+    baseUrl: `https://hospitalbedfinder.com`,
 }
