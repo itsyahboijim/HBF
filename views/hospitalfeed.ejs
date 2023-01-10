@@ -5,21 +5,77 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hospital Bed Finder</title>
+    <link rel="stylesheet" href="/css/hospitalfeed.css">
     <link rel="icon" type="image/x-icon" href="/images/logo.png">
 </head>
 <body>
-    <h1>homepage</h1>
-    <div id="hospitalsDiv">
-        <% hospitals.forEach(hospital => { %>
-            <% if (hospital.validated) { %>
-                <p> <%= hospital.name %> </p> 
-                <p id="<%= hospital._id %>_availableBeds"><%= hospital.availableBeds %> </p>
-                <img src="<%= hospital.image%>" width="100" height="100">
-            <% } %>
-        <% }) %>
+    <div id="wrapper">
+        <header>
+            <div class="feedHeader">
+                <div class="logo">
+                    <div>
+                        <img src="/images/logo.png" alt="HBF_LOGO">
+                    </div>
+                    <h1 class="logoName">
+                        <a class="whiteText" href="https://hospitalbedfinder.com">H<span class="nameLower">ospital</span> B<span class="nameLower">ed</span> F<span class="nameLower">inder</span></a>
+                    </h1>    
+                </div>
+                <div class="signUpOptions">
+                    <p class="whiteText">Are you a representative of a hospital?</p>
+                    <div>
+                        <button id="accountButton" class="signUpButton">Sign up >></button>
+                    </div>
+                </div>
+            </div>
+            <ul class="legendHeader whiteText">
+                <li><img src="/images/legend.png" alt="Legend"> Legend: </li>
+                <li><img src="/images/location_white.png" alt="Address"> - Address</li>
+                <li><img src="/images/contactNum_white.png" alt="Contact number"> - Contact number</li>
+                <li><img src="/images/maxBeds.png" alt="Maximum Beds"> - Maximum Beds</li>
+                <li><img src="/images/availableBeds.png" alt="Available Beds"> - Available Beds</li>
+            </ul>
+            <div class="spacer"></div>
+        </header>
+        <main>
+            <div class="hospitalsContainer" id="hospitalsDiv">
+                <% hospitals.forEach(hospital => { %>
+                    <% if (hospital.validated) { %>
+                        <div class="hospitalBox">
+                            <div class="hospitalIdentifier hospitalFont" style="background-image: url('<%= hospital.image%>')">
+                                <div class="hospitalName">
+                                    <p class="whiteText"><%= hospital.name %></p> 
+                                </div>
+                            </div>
+                            <div class="hospitalDetails">
+                                <ul class="detailsList hospitalFont">
+                                    <li><img src="/images/location.png" alt="Location">: <%= hospital.location %></li>
+                                    <li><img src="/images/contactNum.png" alt="Contact Number">: <%= hospital.contactNum %></li>
+                                </ul>
+                                <ul class="bedsList">
+                                    <li class="maxBedsBar">
+                                        <div>
+                                            <img src="/images/maxBeds.png" alt="Max Beds">
+                                        </div>
+                                        <div>
+                                            <span id="<%= hospital._id %>_maxBeds"><%= hospital.maxBeds %></span>
+                                        </div>
+                                    </li>
+                                    <li id="<%= hospital._id %>_availableBedsBar" class="availableBedsBar">
+                                        <div>
+                                            <img src="/images/availableBeds.png" alt="Available Beds">
+                                        </div>
+                                        <div>
+                                            <span id="<%= hospital._id %>_availableBeds"><%= hospital.availableBeds %></span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    <% } %>
+                <% }) %>
+            </div>
+        </main>
     </div>
-
-    <a href="javascript:void(0);" onclick="Account();">Account</a>
 </body>
 <script>
     let baseUrl = window.location.origin;
@@ -28,36 +84,180 @@
         window.location.href = `${baseUrl}/interface/account`;
         return;
     }
+    document.getElementById("accountButton").addEventListener("click", Account);
+
+    // Change background color for all available bed divs
+    let availableBedsDivs = document.querySelectorAll(".availableBedsBar");
+    let maxBedsDivs = document.querySelectorAll(".maxBedsBar");
+
+    for (let i = 0; i < availableBedsDivs.length; i++){
+        let availableBedsValue = parseInt(availableBedsDivs[i].innerText);
+        let maxBedsValue = parseInt(maxBedsDivs[i].innerText);
+
+        let colorPercentage = availableBedsValue / maxBedsValue;
+
+        if (colorPercentage <= 0.5){
+            colorPercentage = colorPercentage / 0.5;
+            availableBedsDivs[i].style.backgroundColor = `rgb(${Math.round(228 + (21 * colorPercentage))}, ${Math.round(94 + (99 * colorPercentage))}, ${Math.round(45 + (8 * colorPercentage))}`;
+        } else {
+            colorPercentage = (colorPercentage - 0.5) / 0.5;
+            availableBedsDivs[i].style.backgroundColor = `rgb(${Math.round(249 + (152 * -1 * colorPercentage))}, ${Math.round(193 + (31 * colorPercentage))}, ${Math.round(53 + (65 * colorPercentage))}`;
+        }
+    }
 
     function UpdateHospital(e){
         console.log(`Update received: ${e.data}`);
         const hospitalData = JSON.parse(e.data);
 
-        if (hospitalData.name){
+        if (!hospitalData.name){
 
-            // Create new hospital entry
-            let newHospital = document.createElement('div');
-            
-            // New hospital name element
-            let hospitalName = document.createElement('p');
-            hospitalName.innerText = hospitalData.name;
-            newHospital.appendChild(hospitalName);
-            
-            // New hospital available bed count element
-            let hospitalAvailableBedCount = document.createElement('p');
-            hospitalAvailableBedCount.setAttribute('id', `${hospitalData._id}_availableBeds`);
-            hospitalAvailableBedCount.innerText = hospitalData.availableBeds;
-            newHospital.appendChild(hospitalAvailableBedCount);
+            let availableHospitalBedBar = document.getElementById(`${hospitalData.id}_availableBedsBar`);
+            let maxHospitalBed = document.getElementById(`${hospitalData.id}_maxBeds`);
+            let availableHospitalBed = document.getElementById(`${hospitalData.id}_availableBeds`);
 
-            // Append to list of hospitals
-            let hospitalsDiv = document.getElementById("hospitalsDiv");
-            hospitalsDiv.appendChild(newHospital);
+            let newValue = parseInt(availableHospitalBed.innerText) + hospitalData.changeValue;
+            let colorPercentage = newValue / parseInt(maxHospitalBed.innerText);
+            
+            // Red to Yellow range (inclusive to 50%)
+            if (colorPercentage <= 0.5){
+                colorPercentage = colorPercentage / 0.5;
+                availableHospitalBedBar.style.backgroundColor = `rgb(${Math.round(228 + (21 * colorPercentage))}, ${Math.round(94 + (99 * colorPercentage))}, ${Math.round(45 + (8 * colorPercentage))}`;
+            } else {
+                colorPercentage = (colorPercentage - 0.5) / 0.5;
+                availableHospitalBedBar.style.backgroundColor = `rgb(${Math.round(249 + (152 * -1 * colorPercentage))}, ${Math.round(193 + (31 * colorPercentage))}, ${Math.round(53 + (65 * colorPercentage))}`;
+            }
+
+            availableHospitalBed.innerText = parseInt(availableHospitalBed.innerText) + hospitalData.changeValue;
             return;
         }
 
-        let availableHospitalBed = document.getElementById(`${hospitalData.id}_availableBeds`);
-        availableHospitalBed.innerText = parseInt(availableHospitalBed.innerText) + hospitalData.changeValue;
+        // Create new hospital box
+        let newHospitalBox = document.createElement('div')
+        newHospitalBox.classList.add("hospitalBox");
+
+        // Create new hospital identifier
+        let newHospitalIdentifier = document.createElement('div')
+        newHospitalIdentifier.classList.add("hospitalIdentifier", "hospitalFont");
+        newHospitalIdentifier.style.backgroundImage = `url(${hospitalData.image})`;
+
+        let newHospitalNameDiv = document.createElement('div')
+        newHospitalNameDiv.classList.add("hospitalName");
+        let newHospitalName = document.createElement('p')
+        newHospitalName.classList.add("whiteText");
+        newHospitalName.innerText = hospitalData.name;
+       
+        newHospitalNameDiv.appendChild(newHospitalName);
+        newHospitalIdentifier.appendChild(newHospitalNameDiv);
+        newHospitalBox.appendChild(newHospitalIdentifier);
+
+        // Create new hospital details
+        let newHospitalDetails = document.createElement('div')
+        newHospitalDetails.classList.add("hospitalDetails");
+
+        // Address and contact
+        let detailsList = document.createElement('ul')
+        detailsList.classList.add("detailsList", "hospitalFont");
+        let detailsListAddress = document.createElement('li');
+        let detailsListContact = document.createElement('li');
+        
+        let detailstListAddressImage = document.createElement('img');
+        detailstListAddressImage.src = "/images/location.png";
+        detailstListAddressImage.alt = "Location";
+        let detailsListAddressText = document.createTextNode(hospitalData.location);
+        detailsListAddress.appendChild(detailstListAddressImage);
+        detailsListAddress.appendChild(detailsListAddressText);
+        
+        let detailsListContactImage = document.createElement('img');
+        detailsListContactImage.src = "/images/contactNum.png";
+        detailsListContactImage.alt = "Contact Number";
+        let detailsListContactText = document.createTextNode(hospitalData.contactNum);
+        detailsListContact.appendChild(detailsListContactImage);
+        detailsListContact.appendChild(detailsListContactText);
+
+        detailsList.appendChild(detailsListAddress);
+        detailsList.appendChild(detailsListContact);
+
+        // Beds list
+        let bedsList = document.createElement('ul')
+        bedsList.classList.add("bedsList");
+
+        let maxBedsBar = document.createElement('li')
+        maxBedsBar.classList.add("maxBedsBar");
+        
+        let maxBedsImageDiv = document.createElement('div');
+        let maxBedsImage = document.createElement('img');
+        maxBedsImage.src = "/images/maxBeds.png";
+        maxBedsImage.alt = "Max Beds";
+
+        let maxBedsCountDiv = document.createElement('div');
+        let maxBedsCount = document.createElement('span');
+        maxBedsCount.id = `${hospitalData._id}_maxBeds`;
+        maxBedsCount.innerText = hospitalData.maxBeds;
+
+        maxBedsImageDiv.appendChild(maxBedsImage);
+        maxBedsCountDiv.appendChild(maxBedsCount);
+        maxBedsBar.appendChild(maxBedsImageDiv);
+        maxBedsBar.appendChild(maxBedsCountDiv);
+
+        let availableBedsBar = document.createElement('li');
+        availableBedsBar.id = `${hospitalData._id}_availableBedsBar`;
+        availableBedsBar.classList.add("availableBedsBar");
+
+        let colorPercentage = hospitalData.availableBeds / hospitalData.maxBeds;
+        if (colorPercentage <= 0.5){
+            colorPercentage = colorPercentage / 0.5;
+            availableBedsBar.style.backgroundColor = `rgb(${Math.round(228 + (21 * colorPercentage))}, ${Math.round(94 + (99 * colorPercentage))}, ${Math.round(45 + (8 * colorPercentage))}`;
+        } else {
+            colorPercentage = (colorPercentage - 0.5) / 0.5;
+            availableBedsBar.style.backgroundColor = `rgb(${Math.round(249 + (152 * -1 * colorPercentage))}, ${Math.round(193 + (31 * colorPercentage))}, ${Math.round(53 + (65 * colorPercentage))}`;
+        }
+
+        let availableBedsImageDiv = document.createElement('div');
+        let availableBedsImage = document.createElement('img');
+        availableBedsImage.src = "/images/availableBeds.png";
+        availableBedsImage.alt = "Available Beds";
+
+        let availableBedsCountDiv = document.createElement('div');
+        let availableBedsCount = document.createElement('span');
+        availableBedsCount.id = `${hospitalData._id}_availableBeds`;
+        availableBedsCount.innerText = hospitalData.availableBeds;
+
+        availableBedsImageDiv.appendChild(availableBedsImage);
+        availableBedsCountDiv.appendChild(availableBedsCount);
+        availableBedsBar.appendChild(availableBedsImageDiv);
+        availableBedsBar.appendChild(availableBedsCountDiv);
+
+        bedsList.appendChild(maxBedsBar);
+        bedsList.appendChild(availableBedsBar);
+
+        newHospitalDetails.appendChild(detailsList);
+        newHospitalDetails.appendChild(bedsList);
+        newHospitalBox.appendChild(newHospitalDetails);
+
+        // Append to list of hospitals
+        let hospitalsDiv = document.getElementById("hospitalsDiv");
+        hospitalsDiv.appendChild(newHospitalBox);
+        
+        return;
     }
+
+    // Experimental (DO NOT USE FOR NOW, UNFINISHED)
+    /*
+    let availableBedsDivs = document.querySelectorAll(".availableBedsBar");
+    availableBedsDivs.forEach(availableBedsDiv => {
+        let mutationObserver = new MutationObserver(mutation => {
+            console.log(mutation);
+        });
+
+        mutationObserver.observe(availableBedsDiv, {
+            subtree: true,
+            childList: true,
+            characterData: true,
+            characterDataOldValue: true,
+        });
+        console.log("Mutation observer set");
+    });
+    */
 
     let hospitalSource = new EventSource(`${baseUrl}/api/streamHospitalUpdates`);
     hospitalSource.onmessage = UpdateHospital;

@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --headerHeight: 12rem;
+    --hospitalFont: 1.125rem;
+    --bedsFont: 1.50rem;
+    --shadow-filter: 0.5px 0.5px 0.5px #222;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+}
+
+body{
+    background-color: #deeaf8;
+}
+
+input{
+    all: unset;
+}
+
+#wrapper{
+    font-family: 'Rajdhani', sans-serif;
+}
+
+/* Header-related */
+header{
+    background-color: #01224f;
+    width: 100%;
+    height: var(--headerHeight);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+
+.whiteText{
+    color: white;
+}
+
+.feedHeader{
+    display: flex;
+    width: 100%;
+    padding-top: 0.5rem;
+    height: 3rem;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.feedHeader a:hover{
+    color: white;
+}
+
+.logo{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo > div{
+    display: flex;
+    height: 100%;
+    width: auto;
+}
+
+.logo > div > img{
+    height: 100%;
+    width: auto;
+}
+
+.signUpOptions > *{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: end;
+}
+
+.signUpButton{
+    background-color: inherit;
+    border-radius: 8px;
+    border-color: #2430F5;
+    border-width: 2px;
+    height: 1.5rem;
+    width: 6rem;
+    color: white;
+    transition: all 0.2s ease-in-out;
+}
+
+.signUpButton:hover{
+    background-color: white;
+    color: black;
+    border-width: 0px;
+}
+
+.nameLower{
+    font-size: 0.7em;
+}
+
+.legendHeader{
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    padding-bottom: 0.5rem;
+}
+
+.legendHeader img{
+    height: 2rem;
+    vertical-align: middle;
+}
+
+.spacer{
+    height: 2rem;
+}
+
+/* Main content */
+main{
+    margin-top: -4.5rem;
+}
+
+.hospitalsContainer{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1rem 1rem;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.hospitalBox{
+    display: flex;
+    border-radius: 4px;
+    width: 25.625rem;
+    height: 16.563rem;
+    height: 20rem;
+    box-shadow: 0 5px 20px rgba(49,54,68, 0.15);
+    background-color: white;
+}
+
+.hospitalBox .hospitalIdentifier{
+    flex: 0 0 11.25rem;
+}
+
+.hospitalBox .hospitalDetails{
+    flex: 0 0 14.375rem;
+}
+
+.hospitalIdentifier{
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.hospitalName{
+    background-color: rgba(41, 41, 41, 0.8);
+    font-weight: 500;
+    margin-top: auto;
+}
+
+.hospitalName > *{
+    margin: 0.5rem;
+}
+
+.hospitalDetails{
+    display: flex;
+    flex-direction: column;
+}
+
+.hospitalDetails img{
+    height: var(--hospitalFont);
+    vertical-align: middle;
+}
+
+.detailsList{
+    margin: 0.5rem;
+}
+
+.detailsList > li:first-of-type::after{
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 0.25rem auto;
+    background: #cccccc;
+}
+
+.hospitalFont{
+    font-size: var(--hospitalFont);
+}
+
+.bedsList{
+    margin-top: auto;
+    flex-basis: 6rem;
+}
+
+.bedsList, .bedsList img{
+    font-size: var(--bedsFont);
+    height: var(--bedsFont);
+}
+
+.bedsList li{
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+}
+
+.bedsList img{
+    filter: drop-shadow(var(--shadow-filter));
+}
+
+.maxBedsBar{
+    background-color: #6196e6;
+}
+
+.availableBedsBar{
+    background-color: rgb(228, 94, 45);
+    background-color: rgb(249, 193, 53);
+    background-color: rgb(97, 224, 118);
+    /*
+    Red to Yellow: 21 99 8
+    Yellow to Green: -152 31 65
+    */
+}
