@@ -20,6 +20,14 @@
                         <a class="whiteText" href="https://hospitalbedfinder.com">H<span class="nameLower">ospital</span> B<span class="nameLower">ed</span> F<span class="nameLower">inder</span></a>
                     </h1>    
                 </div>
+                <div class="search whiteText">
+                    <div class="searchWrapper">
+                        <div>
+                            <img src="/images/search.png" alt="Search icon">
+                        </div>
+                        <input type="search" id="searchBar" placeholder="Search...">
+                    </div>
+                </div>
                 <div class="signUpOptions">
                     <p class="whiteText">Are you a representative of a hospital?</p>
                     <div>
@@ -104,6 +112,22 @@
             availableBedsDivs[i].style.backgroundColor = `rgb(${Math.round(249 + (152 * -1 * colorPercentage))}, ${Math.round(193 + (31 * colorPercentage))}, ${Math.round(53 + (65 * colorPercentage))}`;
         }
     }
+
+    let searchHospitals = document.querySelectorAll(".hospitalBox");
+    let searchBar = document.getElementById("searchBar");
+    searchBar.value = "";
+    searchBar.addEventListener("input", e => {
+        let value = e.target.value.toLowerCase();
+        searchHospitals.forEach(searchHospital => {
+            let name = searchHospital.children[0].innerText.toLowerCase();
+            let address = searchHospital.children[1].children[0].children[0].innerText.toLowerCase().replaceAll(",", "");
+            let maxBeds = parseInt(searchHospital.children[1].children[1].children[0].innerText);
+            let availableBeds = parseInt(searchHospital.children[1].children[1].children[1].innerText);
+
+            let match = name.includes(value) || address.includes(value) || maxBeds >= parseInt(value) || availableBeds >= parseInt(value);
+            searchHospital.classList.toggle("hide", !match);
+        });
+    });
 
     function UpdateHospital(e){
         console.log(`Update received: ${e.data}`);
@@ -237,6 +261,7 @@
         // Append to list of hospitals
         let hospitalsDiv = document.getElementById("hospitalsDiv");
         hospitalsDiv.appendChild(newHospitalBox);
+        searchHospitals = document.querySelectorAll(".hospitalBox");
         
         return;
     }

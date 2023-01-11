@@ -27,6 +27,10 @@ input{
     all: unset;
 }
 
+div.hide{
+    display: none;
+}
+
 #wrapper{
     font-family: 'Rajdhani', sans-serif;
 }
@@ -53,7 +57,7 @@ header{
     height: 3rem;
     margin: 0 auto;
     align-items: center;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 .feedHeader a:hover{
@@ -76,6 +80,34 @@ header{
 .logo > div > img{
     height: 100%;
     width: auto;
+}
+
+.search{
+    width: 300px;
+    border: 2px solid white;
+    height: 100%;
+    border-radius: 32px;
+}
+
+.search > .searchWrapper{
+    width: 100%;
+    padding: 10px 20px 10px 10px;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.search div{
+    width: auto;
+    height: 100%;
+}
+
+.search div > img{
+    width: auto;
+    height: 100%;
+}
+
+.search input{
+    width: 100%;
 }
 
 .signUpOptions > *{
