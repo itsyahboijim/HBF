@@ -51,7 +51,7 @@ $(function(){
         $("#passwordErrors").empty();
 
         passwordErrors = [];
-        if (e.target.textLength < 8){
+        if (e.target.value.length < 8 || !e.target.value){
             passwordErrors.push("Password must be longer than 8 characters.");
         }
         if (!hasUppercase(e.target.value)){
@@ -106,7 +106,7 @@ $(function(){
         this.value = inputValue;
 
         if (parseInt(this.value) > parseInt(maxBeds.value)){
-            if (bedCountError.innerText == "") bedCountError.innerText = "The count of available beds cannot exceed the maximum bed count!";
+            if (bedCountError.innerText == "") bedCountError.innerText = "# of available beds cannot exceed the maximum bed count!";
         } else {
             if (bedCountError.innerText != "") bedCountError.innerText = "";
         }

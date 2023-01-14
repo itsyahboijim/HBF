@@ -12,6 +12,10 @@ export class Database{
         this.client.connect().then(() => {
             const db = this.client.db("hbfdb");
             this.collection = db.collection(this.collectionName);
+
+            if (this.collectionName == "hospitals"){
+                this.collection.createIndex({name: "text"});
+            }
             console.log(`DB Collection: ${this.collectionName} loaded.`);
         });
     }

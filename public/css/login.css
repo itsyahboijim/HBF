@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --shadow-filter: 0.5px 0.5px 0.5px #222;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html, body, main{
+    height: 100%;
+}
+
+body{
+    background-image: url("/images/login_bg.png");
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+input{
+    all: unset;
+}
+
+input[type="file"]{
+    display: none;
+}
+
+#wrapper{
+    font-family: 'Rajdhani', sans-serif;
+    color: white;
+    height: 100%;
+}
+
+div.hide{
+    display: none;
+}
+
+main{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 25%;
+    height: fit-content;
+    max-height: 95%;
+    box-sizing: border-box;
+    background-color: #303030;
+    overflow-y: auto;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
+    box-shadow: 0 0px 20px rgba(49,54,68, 1);
+}
+
+::-webkit-scrollbar{
+    width: 0.5rem;
+}
+
+::-webkit-scrollbar-track{
+    background-color: #303030;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #1a1a1a;
+    border-radius: 4px;
+}
+
+@supports (scrollbar-color: #1a1a1a #303030){
+    * {
+        scrollbar-color: #1a1a1a #303030;
+        scrollbar-width: thin;
+    }
+}
+
+.formWrapper{
+    padding: 2rem 2rem 1rem 2rem;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+form label{
+    font-weight: 400;
+    line-height: 1.5rem;
+}
+
+form input{
+    width: 95%;
+}
+
+form .formRow{
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+form .formRow.file{
+    align-items: center;
+    margin-top: 0.5rem;
+}
+
+form .formRow.grow > *{
+    flex-grow: 1;
+}
+
+.inputWrapper{
+    background-color: #1a1a1a;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.inputWrapper input{
+    padding: 0.5rem;
+}
+
+.formTitle{
+    text-align: center;
+    font-weight: 700;
+    font-size: 2rem;
+    padding: 0 1rem 0.5rem 1rem;
+}
+
+.notice{
+    border-radius: 8px;
+    text-align: justify;
+    margin-bottom: 0.5rem;
+}
+
+.notice.login{
+    border: 2px solid #01224f;
+    background-color: #0000333f;
+}
+
+.notice.signUp{
+    border: 2px solid #4f0101;
+    background-color: #38000065
+}
+
+.noticeWrapper{
+    padding: 1rem;
+}
+
+.buttonWrapper{
+    height: 2rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.buttonWrapper:hover{
+    box-shadow: 0 0px 5px rgba(89, 98, 122, 0.25);
+}
+
+.button{
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background-color: #01224f;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.button.file{
+    padding: 0.15rem 0.15rem 0.15rem 0.35rem;
+    margin-right: 0.25rem;
+}
+
+.button.file:hover{
+    box-shadow: 0 0px 5px rgba(89, 98, 122, 0.25);
+}
+
+.toggle{
+    color: rgb(48, 96, 255);
+    cursor: pointer;
+}
+
+.toggle:hover{
+    text-decoration: underline;
+}
+
+.inputFileWrapper{
+    background-color: #1a1a1a;
+    flex-grow: 1;
+    border-radius: 4px;
+}
+
+.inputFileWrapper div{
+    padding: 0.5rem;
+}
+
+.required{
+    color: red;
+}
+
+.error{
+    color: rgb(255, 103, 103);
+    font-size: 0.8rem;
+}

@@ -5,58 +5,141 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hospital Bed Finder - Login</title>
+    <link rel="stylesheet" href="/css/login.css">
     <link rel="icon" type="image/x-icon" href="/images/logo.png">
 </head>
 <body>
-    <ul>
-        <li id="loginClick">Login</li>
-        <li id="signUpClick">Sign up</li>
-    </ul>
-    <form class="login" id="loginForm" method="post">
-        <label for="email">Email:</label>
-        <input required type="email" name="email">
+    <div id="wrapper">
+        <main id="mainSection">
+            <div id="loginFormWrapper" class="formWrapper">
+                <form id="loginForm" method="post">
+                    <span class="formTitle">Login</span>
 
-        <label for="password">Password:</label>
-        <input required type="password" name="password">
+                    <div class="notice login">
+                        <div class="noticeWrapper">
+                            <p>Notice:</p>
+                            <p class="noticeMessage">
+                                Logging in would place a sesssion cookie, also known as a "temporary cookie",
+                                on your browser. This allows us to distinguish between various users by tracking
+                                their login details. This cookie will be deleted as you close your browser.
+                            </p>
+                        </div>
+                    </div>
 
-        <input type="submit" value="Login">
-        <p id="loginError"></p>
-    </form>
-    <form class="signUp" id="signUpForm" method="post">
-        <label for="email">Email:</label>
-        <input required type="email" name="email" id="signUpEmail">
-        <p id="emailError"></p>
+                    <label for="email">Email</label>
+                    <div class="inputWrapper">
+                        <input required type="email" name="email">
+                    </div>
+            
+                    <label for="password">Password</label>
+                    <div class="inputWrapper">
+                        <input required type="password" name="password">
+                    </div>
 
-        <label for="password">Password:</label>
-        <input required type="password" name="password" id="signUpPassword">
-        <ul id="passwordErrors"></ul>
+                    <div class="buttonWrapper">
+                        <input class="button" type="submit" value="Login">
+                    </div>
+                    <p id="loginError" class="error"></p>
 
-        <label for="name">Hospital name:</label>
-        <input required type="text" name="name">
+                    <p>Need an account? <span id="signUpClick" class="toggle">Register</span></p>
+                </form>
+            </div>
+            <div id="signUpFormWrapper" class="formWrapper">
+                <form id="signUpForm" method="post">
+                    <span class="formTitle">Sign Up</span>
 
-        <label for="location">Location:</label>
-        <input required type="text" name="location">
+                    <div class="notice signUp">
+                        <div class="noticeWrapper">
+                            <p>Notice:</p>
+                            <p class="noticeMessage">
+                                The security of this web application has yet to be scrutinized thus, we heavily recommend
+                                using a different email (proxy or temporary) for registration.
+                            </p>
+                        </div>
+                    </div>
 
-        <label for="contactNum">Contact number:</label>
-        <input required type="text" name="contactNum" inputmode="numeric" pattern="[0-9]*" maxlength="11" id="signUpContactNumber">
-        <p id="contactNumberError"></p>
+                    <div class="formRow grow">
+                        <div>
+                            <label for="email">Email <span class="required">*</span></label>
+                            <div class="inputWrapper">
+                                <input required type="email" name="email" id="signUpEmail">
+                            </div>
+                            <p id="emailError" class="error"></p>
+                        </div>
+                        <div>
+                            <label for="password">Password <span class="required">*</span></label>
+                            <div class="inputWrapper">
+                                <input required type="password" name="password" id="signUpPassword">
+                            </div>
+                            <ul id="passwordErrors" class="error"></ul>
+                        </div>
+                    </div>
+            
+                    <label for="name">Hospital name <span class="required">*</span></label>
+                    <div class="inputWrapper">
+                        <input required type="text" name="name">
+                    </div>
+                    
+                    <label for="location">Location <span class="required">*</span></label>
+                    <div class="inputWrapper">
+                        <input required type="text" name="location">
+                    </div>
+            
+                    <label for="contactNum">Contact number <span class="required">*</span></label>
+                    <div class="inputWrapper">
+                        <input required type="text" name="contactNum" inputmode="numeric" pattern="[0-9]*" maxlength="11" id="signUpContactNumber">
+                    </div>
+                    <p id="contactNumberError" class="error"></p>
+            
+                    <div class="formRow grow">
+                        <div>
+                            <label for="maxBeds">Maximum bed count <span class="required">*</span></label>
+                            <div class="inputWrapper">
+                                <input required type="text" name="maxBeds" inputmode="numeric" pattern="[0-9]*" maxlength="6" id="signUpMaxBeds">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="availableBeds">Available bed count:</label>
+                            <div class="inputWrapper">
+                                <input type="text" name="availableBeds" inputmode="numeric" pattern="[0-9]*" maxlength="6" id="signUpAvailableBeds">
+                            </div>
+                            <p id="bedCountError" class="error"></p>
+                        </div>
+                    </div>
+            
+                    <div class="formRow file">
+                        <p>Select image: </p>
+                        <div class="inputFileWrapper">
+                            <div>
+                                <label class="button file" for="image">
+                                    <input type="file" accept="image/*" name="image" id="image"> 
+                                    Browse
+                                </label>
+                                <span id="selectedFile">No file selected</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="buttonWrapper">
+                        <input class="button" type="submit" value="Register">
+                    </div>
+                    <p id="signUpError" class="error"></p>
 
-        <label for="maxBeds">Maximum bed count:</label>
-        <input required type="text" name="maxBeds" inputmode="numeric" pattern="[0-9]*" maxlength="6" id="signUpMaxBeds">
-
-        <label for="availableBeds">Available bed count:</label>
-        <input type="text" name="availableBeds" inputmode="numeric" pattern="[0-9]*" maxlength="6" id="signUpAvailableBeds">
-        <p id="bedCountError"></p>
-
-        <label for="image">Select image: </label>
-        <input type="file" accept="image/*" name="image" id="image">
-
-        <input type="submit" value="Register">
-        <p id="signUpError"></p>
-    </form>
+                    <span id="loginClick" class="toggle">Already have an account?</span>
+                </form>
+            </div>
+        </main>
+    </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="/js/formArrayToObject.js"></script>
 <script src="/js/login.js"></script>
 <script src="/js/toggleLoginOptions.js"></script>
+<script>
+    let selectedFileName = document.getElementById("selectedFile");
+
+    document.getElementById("image").addEventListener("change", e => {
+        selectedFileName.innerText = e.target.files[0].name;
+    });
+</script>
 </html>
