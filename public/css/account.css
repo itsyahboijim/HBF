@@ -1,0 +1,299 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --headerHeight: 8rem;
+    --hospitalFont: 1.125rem;
+    --bedsFont: 1.50rem;
+    --shadow-filter: 0.5px 0.5px 0.5px #222;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+}
+
+body{
+    background-color: #deeaf8;
+}
+
+input, button{
+    all: unset;
+}
+
+button{
+    cursor: pointer;
+}
+
+div.hide{
+    display: none;
+}
+
+#wrapper{
+    font-family: 'Rajdhani', sans-serif;
+}
+
+header{
+    background-color: #01224f;
+    width: 100%;
+    height: var(--headerHeight);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+
+.whiteText{
+    color: white;
+}
+
+.feedHeader{
+    display: flex;
+    width: 100%;
+    padding-top: 0.5rem;
+    height: 3rem;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.feedHeader a:hover{
+    color: white;
+}
+
+.logo{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo > div{
+    display: flex;
+    height: 100%;
+    width: auto;
+}
+
+.logo > div > img{
+    height: 100%;
+    width: auto;
+}
+
+.nameLower{
+    font-size: 0.7em;
+}
+
+.buttonWrapper{
+    height: calc(var(--headerHeight) /2rem - 2rem);
+    height: 100%;
+}
+
+.buttonWrapper > button{
+    height: 100%;
+    width: auto;
+    font-weight: 500;
+    transition: all 0.25s ease-in-out;
+}
+
+.buttonWrapper > button:hover{
+    transform: scale(1.1);
+}
+
+.buttonWrapper > button > img{
+    height: 70%;
+    width: auto;
+    margin-right: 0.25rem;
+}
+
+.buttonWrapper > button > *{
+    vertical-align: middle;
+}
+
+.spacer{
+    height: 2rem;
+}
+
+main{
+    margin-top: -3rem;
+}
+
+.accountWrapper{
+    display: flex;
+    width: 55%;
+    margin-inline: auto;
+    height: 37.5rem;
+    background-color: white;
+    box-shadow: 0 5px 20px rgba(49,54,68, 0.15);
+    color: #001c42;
+}
+
+.accountWrapper .imageWrapper{
+    width: 21.063rem;
+    height: 37.5rem;
+}
+
+.accountWrapper .imageWrapper img{
+    height: 100%;
+    width: 100%;
+}
+
+.accountWrapper .detailsWrapper{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+.detailsList .detail::after{
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 0.25rem auto 0.5rem auto;
+    background: #cccccc;
+}
+
+p.detailLabel{
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+p.detailInfo{
+    font-size: 1.85rem;
+    font-weight: 600;
+    margin-inline: auto;
+    width: fit-content;
+}
+
+.editWrapper{
+    width: 100%;
+    color: white;
+    margin-bottom: 0.5rem;
+}
+
+.editWrapper button{
+    border-radius: 4px;
+    width: 100%;
+    padding: 0.25rem 0;
+    text-align: center;
+    background-color: #01224f;
+    font-weight: 500;
+    font-size: 1.5rem;
+    transition: all 0.25s ease-in-out;
+}
+
+.editButton:active{
+    transform: scale(0.95);
+}
+
+.bedCountWrapper{
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex-grow: 1;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.bedCountWrapper .upperSection, .bedCountWrapper .lowerSection{
+    display: flex;
+    width: 100%;
+}
+
+.upperSection{
+    gap: 0.25rem;
+}
+
+#customBedCount::placeholder{
+    font-size: 1.5rem;
+}
+
+.lowerSection{
+    gap: 0.5rem;
+}
+
+.bedCountWrapper .upperSection > *, .bedCountWrapper .middleSection > *, .bedCountWrapper .lowerSection > *{
+    text-align: center;
+    flex-grow: 1;
+}
+
+.bedCountWrapper button{
+    cursor: pointer;
+}
+
+.bedCountWrapper .upperSection{
+    width: 100%;
+}
+
+.upperSection span::after{
+    content: "";
+    display: block;
+    height: 1px;
+    width: 90%;
+    margin: 0 auto;
+    background: #cccccc;
+}
+
+.middleSection{
+    display: flex;
+    text-align: center;
+}
+
+.middleSection input{
+    border-radius: 4px;
+    border-style: solid;
+    border-width: 2px;
+    background-color: #01224f;
+    color: white;
+}
+
+.bedCountWrapper .lowerSection > *{
+    text-align: center;
+    flex-grow: 1;
+}
+
+.bedCountWrapper .lowerSection{
+    width: 100%;
+}
+
+.positiveButton, .negativeButton{
+    border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    color: rgb(241, 241, 241);
+    user-select: none;
+    transition: all 0.25s ease-in-out;
+}
+
+.positiveButton:active, .negativeButton:active{
+    transform: scale(0.90);
+}
+
+.positiveButton{
+    background-color: rgba(89, 211, 109, 0.95);
+}
+
+.positiveButton:hover{
+    background-color: rgb(89, 211, 110);
+}
+
+.negativeButton{
+    background-color: rgba(228, 94, 45, 0.95);
+}
+
+.negativeButton:hover{
+    background-color: rgb(228, 94, 45);
+}
+
+.error{
+    color: rgb(211, 43, 43);
+    font-size: 1rem;
+    text-align: center;
+}
