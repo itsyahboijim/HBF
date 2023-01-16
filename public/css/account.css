@@ -147,7 +147,30 @@ main{
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    flex-basis: 0;
     padding: 1rem;
+    overflow-y: auto;
+}
+
+::-webkit-scrollbar{
+    width: 0.5rem;
+}
+
+::-webkit-scrollbar-track{
+    background-color: white;
+    margin-block: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb{
+    background-color: #01224fbe;
+    border-radius: 4px;
+}
+
+@supports (scrollbar-color: #01224fbe white){
+    * {
+        scrollbar-color: #01224fbe white;
+        scrollbar-width: thin;
+    }
 }
 
 .detailsList .detail::after{
@@ -198,6 +221,7 @@ p.detailInfo{
     flex-direction: column;
     gap: 0.5rem;
     flex-grow: 1;
+    flex-basis: 0;
     font-size: 1.75rem;
     font-weight: 600;
 }
@@ -296,4 +320,16 @@ p.detailInfo{
     color: rgb(211, 43, 43);
     font-size: 1rem;
     text-align: center;
+}
+
+.notice{
+    border-radius: 8px;
+    text-align: justify;
+    border: 2px solid #c70000;
+    background-color: #b1000059;
+    margin-bottom: 0.5rem;
+}
+
+.notice p{
+    padding: 0.75rem;
 }

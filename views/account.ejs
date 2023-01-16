@@ -41,7 +41,13 @@
                 </div>
                 <div class="detailsWrapper">
                     <% if (!validated) { %>
-                        <p>Hospital is not validated.</p>
+                        <div class="notice">
+                            <p>
+                                This hospital will not be displayed on the homepage because it is not validated.
+                                To validate this account, please email us through hospitalbedfinder@gmail.com with
+                                attachments to prove the legitimacy of this hospital and your association with such.
+                            </p>
+                        </div>
                     <% } %>
                     <ul class="detailsList">
                         <li class="detail">
