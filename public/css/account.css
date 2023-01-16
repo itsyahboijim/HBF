@@ -237,6 +237,7 @@ p.detailInfo{
 
 #customBedCount::placeholder{
     font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.685);
 }
 
 .lowerSection{
@@ -332,4 +333,5 @@ p.detailInfo{
 
 .notice p{
     padding: 0.75rem;
+    font-weight: 500;
 }
