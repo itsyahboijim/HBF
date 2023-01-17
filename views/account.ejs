@@ -49,26 +49,47 @@
                             </p>
                         </div>
                     <% } %>
-                    <ul class="detailsList">
-                        <li class="detail">
-                            <p class="detailLabel">Name</p>
-                            <p class="detailInfo"><%= name %></p>
-                        </li>
-                        <li class="detail">
-                            <p class="detailLabel">Address</p>
-                            <p class="detailInfo"><%= location %></p>
-                        </li>
-                        <li class="detail">
-                            <p class="detailLabel">Contact number</p>
-                            <p class="detailInfo"><%= contactNum %></p>
-                        </li>
-                        <li class="detail">
-                            <p class="detailLabel">Maximum bed count</p>
-                            <p id="maxBeds" class="detailInfo"><%= maxBeds %> </p>
-                        </li>
-                    </ul>
+                    <form id="editForm" method="post">
+                        <ul class="detailsList">
+                            <li class="detail">
+                                <p class="detailLabel">Name</p>
+                                <p id="hospitalName" class="detailInfo"><%= name %></p>
+                                <div class="detailInputWrapper">
+                                    <input type="text" name="name" id="inputName" class="detailInput" placeholder="Enter name here">
+                                    <p id="nameError"></p>
+                                </div>
+                            </li>
+                            <li class="detail">
+                                <p class="detailLabel">Address</p>
+                                <p id="hospitalAddress" class="detailInfo"><%= location %></p>
+                                <div class="detailInputWrapper">
+                                    <input type="text" name="address" id="inputAddress" class="detailInput" placeholder="Enter address here">
+                                    <p id="addressError"></p>
+                                </div>
+                            </li>
+                            <li class="detail">
+                                <p class="detailLabel">Contact number</p>
+                                <p id="hospitalContact" class="detailInfo"><%= contactNum %></p>
+                                <div class="detailInputWrapper">
+                                    <input type="text" name="contactNum" id="inputContactNum" class="detailInput" placeholder="Enter contact number here">
+                                    <p id="contactError"></p>
+                                </div>
+                            </li>
+                            <li class="detail">
+                                <p class="detailLabel">Maximum bed count</p>
+                                <p id="hospitalMaxBeds" id="maxBeds" class="detailInfo"><%= maxBeds %></p>
+                                <div class="detailInputWrapper">
+                                    <input type="text" name="maxBeds" id="inputMaxBeds" class="detailInput" placeholder="Enter maximum beds here">
+                                </div>
+                            </li>
+                        </ul>
+                    </form>
                     <div class="editWrapper">
-                        <button class="editButton">Edit</button>
+                        <button id="editButton" class="editButton">Edit</button>
+                        <div id="toggledButtonsWrapper" class="toggledButtonsWrapper">
+                            <button id="saveButton" class="saveButton">Save</button>
+                            <button id="cancelButton" class="cancelButton">Cancel</button>
+                        </div>
                     </div>
                     <div class="bedCountWrapper">
                         <p class="detailLabel">Available bed count</p>
@@ -95,6 +116,7 @@
 <script>
     let baseUrl = window.location.origin;
 
+    // Logout feature
     function Logout(){
         window.location.href = `${baseUrl}/api/logout`;
         return;
@@ -102,6 +124,7 @@
     let logoutButton = document.getElementById("logoutButton");
     logoutButton.addEventListener("click", Logout);
 
+    // Homepage feature
     function BackToHomepage(){
         window.location.href = `${baseUrl}/interface/hospitalFeed`;
         return;
@@ -109,6 +132,54 @@
     let homeButton = document.getElementById("homeButton");
     homeButton.addEventListener("click", BackToHomepage);
 
+    // Edit account feature
+    let editInputs = document.querySelectorAll(".detailInputWrapper");
+    function hideInputs(hideBool){
+        editInputs.forEach(input => {
+            input.classList.toggle("hide", hideBool);
+        });
+    }
+    hideInputs(true);
+    
+    let details = document.querySelectorAll(".detailInfo");
+    function hideDetails(hideBool){
+        details.forEach(detail => {
+            detail.classList.toggle("hide", hideBool);
+        });
+    }
+
+    function setDetailsToInputs(){
+        for (let i = 0; i < editInputs.length; i++) {
+            editInputs[i].children[0].value = details[i].innerText;
+        }
+    }
+    setDetailsToInputs();
+
+    const editForm = document.getElementById("editForm");
+    const toggledButtons = document.getElementById("toggledButtonsWrapper");
+    toggledButtons.classList.toggle("hide", true);
+    const editButton = document.getElementById("editButton");
+    function toggleEdit(e){
+        hideInputs(false);
+        hideDetails(true);
+        toggledButtons.classList.toggle("hide", false);
+        e.target.classList.toggle("hide", true);
+    }
+    editButton.addEventListener("click", toggleEdit);
+
+    document.getElementById("cancelButton").addEventListener("click", e => {
+        hideInputs(true);
+        hideDetails(false);
+        setDetailsToInputs();
+        editButton.classList.toggle("hide", false);
+        toggledButtons.classList.toggle("hide", true);
+    });
+
+    document.getElementById("cancelButton").addEventListener("click", e => {
+        // Send data to server and render errors on interface if any
+    });
+
+    // Available bed modification feature
     document.getElementById("plusOneChangeBedBtn").addEventListener("click", e => {
         ChangeAvailableBeds('+');
     });
@@ -122,8 +193,6 @@
     document.getElementById("minusChangeBedBtn").addEventListener("click", e => {
         SubmitCustomBedCount('-');
     });
-
-
 
     let changeCounter = 0;
     let requestTimer = null;

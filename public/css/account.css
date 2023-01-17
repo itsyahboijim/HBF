@@ -35,6 +35,14 @@ div.hide{
     display: none;
 }
 
+#editButton.hide{
+    display: none;
+}
+
+p.hide{
+    display: none;
+}
+
 #wrapper{
     font-family: 'Rajdhani', sans-serif;
 }
@@ -173,7 +181,7 @@ main{
     }
 }
 
-.detailsList .detail::after{
+.detailsList .detail::after, .detailsList .detailInputWrapper::after{
     content: "";
     display: block;
     height: 1px;
@@ -194,6 +202,16 @@ p.detailInfo{
     width: fit-content;
 }
 
+input.detailInput{
+    display: block;
+    margin-inline: auto;
+    width: 95%;
+    padding: 0.25rem;
+    text-align: center;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
 .editWrapper{
     width: 100%;
     color: white;
@@ -202,17 +220,38 @@ p.detailInfo{
 
 .editWrapper button{
     border-radius: 4px;
-    width: 100%;
     padding: 0.25rem 0;
     text-align: center;
-    background-color: #01224f;
     font-weight: 500;
     font-size: 1.5rem;
     transition: all 0.25s ease-in-out;
 }
 
-.editButton:active{
+.editWrapper button:active{
     transform: scale(0.95);
+}
+
+.editButton{
+    width: 100%;
+    background-color: #01224f;
+}
+
+.toggledButtonsWrapper{
+    display: flex;
+    gap: 1rem;
+}
+
+.toggledButtonsWrapper > *{
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.saveButton{
+    background-color: rgb(89, 211, 110);
+}
+
+.cancelButton{
+    background-color: rgb(228, 94, 45);
 }
 
 .bedCountWrapper{
@@ -235,9 +274,10 @@ p.detailInfo{
     gap: 0.25rem;
 }
 
-#customBedCount::placeholder{
+.accountWrapper input::placeholder{
     font-size: 1.5rem;
     color: rgba(255, 255, 255, 0.685);
+    text-align: center;
 }
 
 .lowerSection{
@@ -271,7 +311,7 @@ p.detailInfo{
     text-align: center;
 }
 
-.middleSection input{
+.detailsList .detailInputWrapper, .middleSection input{
     border-radius: 4px;
     border-style: solid;
     border-width: 2px;
