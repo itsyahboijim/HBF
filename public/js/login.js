@@ -36,7 +36,6 @@ $(function(){
     }
     document.getElementById("signUpEmail").addEventListener("input", checkEmail);
     document.getElementById("signUpEmail").addEventListener("change", e => {
-        // ONLY TRIGGERS ONCE
         e.target.value = e.target.value.trim();
     });
 
@@ -89,20 +88,22 @@ $(function(){
 
     // Sign up contact number validation
     let contactNumberError = document.getElementById("contactNumberError");
-    function checkContactNumber(str){
-        const cellphoneRegex = /^\d{11}$/;
-        return cellphoneRegex.test(str);
-    }
-    document.getElementById("signUpContactNumber").addEventListener("input", function(event) {
-        let inputValue = this.value;
-        inputValue = inputValue.replace(/[^0-9\b]/g,'');
-        this.value = inputValue;
+    const inputContact = document.getElementById("signUpContactNumber");
+    inputContact.addEventListener("input", function(event){
+        let lastValue = inputContact.value;
+        inputContact.value = lastValue.replace(/[^0-9\s\-\(\)\+]/g, "");
+        if(inputContact.value.length > 16){
+            inputContact.value = lastValue.substring(0,16);
+        }
 
-        if (!checkContactNumber(this.value)){
-            if (contactNumberError.innerText == "") contactNumberError.innerText = "Please enter an 11-digit cellphone number.";
+        if(inputContact.value.length < 8){
+            if (contactNumberError.innerText == "") contactNumberError.innerText = "Please enter a valid contact number.";
         } else {
             if (contactNumberError.innerText != "") contactNumberError.innerText = "";
         }
+    });
+    document.getElementById("signUpContactNumber").addEventListener("change", e => {
+        e.target.value = e.target.value.trim();
     });
 
     // Bed count validation
