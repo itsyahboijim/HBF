@@ -35,7 +35,11 @@ $(function(){
         }
     }
     document.getElementById("signUpEmail").addEventListener("input", checkEmail);
-    
+    document.getElementById("signUpEmail").addEventListener("change", e => {
+        // ONLY TRIGGERS ONCE
+        e.target.value = e.target.value.trim();
+    });
+
     // Sign up password validation
     let passwordErrors = [];
     function hasUppercase(str){
@@ -72,6 +76,16 @@ $(function(){
         }
     }
     document.getElementById("signUpPassword").addEventListener("input", checkPassword);
+
+    // Hospital name trim
+    document.getElementById("signUpName").addEventListener("change", e => {
+        e.target.value = e.target.value.trim();
+    });
+
+    //Hospital location trim
+    document.getElementById("signUpLocation").addEventListener("change", e => {
+        e.target.value = e.target.value.trim();
+    });
 
     // Sign up contact number validation
     let contactNumberError = document.getElementById("contactNumberError");
@@ -110,6 +124,13 @@ $(function(){
         } else {
             if (bedCountError.innerText != "") bedCountError.innerText = "";
         }
+    });
+
+    // Image name processing
+    let selectedFileName = document.getElementById("selectedFile");
+
+    document.getElementById("image").addEventListener("change", e => {
+        selectedFileName.innerText = e.target.files[0].name;
     });
 
     // Event listener for sign up

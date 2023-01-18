@@ -62,7 +62,7 @@
                         <div>
                             <label for="email">Email <span class="required">*</span></label>
                             <div class="inputWrapper">
-                                <input required type="email" name="email" id="signUpEmail">
+                                <input required type="text" name="email" id="signUpEmail">
                             </div>
                             <p id="emailError" class="error"></p>
                         </div>
@@ -77,12 +77,12 @@
             
                     <label for="name">Hospital name <span class="required">*</span></label>
                     <div class="inputWrapper">
-                        <input required type="text" name="name">
+                        <input required type="text" name="name" id="signUpName">
                     </div>
                     
                     <label for="location">Location <span class="required">*</span></label>
                     <div class="inputWrapper">
-                        <input required type="text" name="location">
+                        <input required type="text" name="location" id="signUpLocation">
                     </div>
             
                     <label for="contactNum">Contact number <span class="required">*</span></label>
@@ -135,11 +135,4 @@
 <script src="/js/formArrayToObject.js"></script>
 <script src="/js/login.js"></script>
 <script src="/js/toggleLoginOptions.js"></script>
-<script>
-    let selectedFileName = document.getElementById("selectedFile");
-
-    document.getElementById("image").addEventListener("change", e => {
-        selectedFileName.innerText = e.target.files[0].name;
-    });
-</script>
 </html>
