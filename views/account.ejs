@@ -56,15 +56,14 @@
                                 <p id="hospitalName" class="detailInfo"><%= name %></p>
                                 <div class="detailInputWrapper">
                                     <input type="text" name="name" id="inputName" class="detailInput" placeholder="Enter name here">
-                                    <p id="nameError"></p>
+                                    <p id="nameError" class="error"></p>
                                 </div>
                             </li>
                             <li class="detail">
                                 <p class="detailLabel">Address</p>
-                                <p id="hospitalAddress" class="detailInfo"><%= location %></p>
+                                <p id="hospitalLocation" class="detailInfo"><%= location %></p>
                                 <div class="detailInputWrapper">
-                                    <input type="text" name="address" id="inputAddress" class="detailInput" placeholder="Enter address here">
-                                    <p id="addressError"></p>
+                                    <input type="text" name="location" id="inputLocation" class="detailInput" placeholder="Enter address here">
                                 </div>
                             </li>
                             <li class="detail">
@@ -72,14 +71,13 @@
                                 <p id="hospitalContact" class="detailInfo"><%= contactNum %></p>
                                 <div class="detailInputWrapper">
                                     <input type="text" name="contactNum" id="inputContactNum" class="detailInput" placeholder="Enter contact number here">
-                                    <p id="contactError"></p>
                                 </div>
                             </li>
                             <li class="detail">
                                 <p class="detailLabel">Maximum bed count</p>
-                                <p id="hospitalMaxBeds" id="maxBeds" class="detailInfo"><%= maxBeds %></p>
+                                <p id="hospitalMaxBeds" class="detailInfo"><%= maxBeds %></p>
                                 <div class="detailInputWrapper">
-                                    <input type="text" name="maxBeds" id="inputMaxBeds" class="detailInput" placeholder="Enter maximum beds here">
+                                    <input type="text" name="maxBeds" id="inputMaxBeds" class="detailInput" maxlength="6" placeholder="Enter maximum beds here">
                                 </div>
                             </li>
                         </ul>
@@ -90,6 +88,7 @@
                             <button id="saveButton" class="saveButton">Save</button>
                             <button id="cancelButton" class="cancelButton">Cancel</button>
                         </div>
+                        <p id="requestError" class="error"></p>
                     </div>
                     <div class="bedCountWrapper">
                         <p class="detailLabel">Available bed count</p>
@@ -133,6 +132,29 @@
     homeButton.addEventListener("click", BackToHomepage);
 
     // Edit account feature
+    document.getElementById("inputName").addEventListener("change", e => {
+        e.target.value = e.target.value.trim();
+    });
+
+    document.getElementById("inputLocation").addEventListener("change", e => {
+        e.target.value = e.target.value.trim();
+    });
+
+    const inputContact = document.getElementById("inputContactNum");
+    inputContact.addEventListener("input", function(event){
+        let lastValue = inputContact.value;
+        inputContact.value = lastValue.replace(/[^0-9\s\-\(\)\+]/g, "");
+        if(inputContact.value.length > 16){
+            inputContact.value = lastValue.substring(0,16);
+        }
+    });
+
+    document.getElementById("inputMaxBeds").addEventListener("input", function(event){
+        let inputValue = this.value;
+        inputValue = inputValue.replace(/[^0-9\b]/g,'');
+        this.value = inputValue;
+    });
+    
     let editInputs = document.querySelectorAll(".detailInputWrapper");
     function hideInputs(hideBool){
         editInputs.forEach(input => {
@@ -155,7 +177,7 @@
     }
     setDetailsToInputs();
 
-    const editForm = document.getElementById("editForm");
+    let errorList = document.querySelectorAll(".error");
     const toggledButtons = document.getElementById("toggledButtonsWrapper");
     toggledButtons.classList.toggle("hide", true);
     const editButton = document.getElementById("editButton");
@@ -173,10 +195,31 @@
         setDetailsToInputs();
         editButton.classList.toggle("hide", false);
         toggledButtons.classList.toggle("hide", true);
+        errorList.forEach(error => {
+            errorList.innerText = "";
+        });
     });
 
-    document.getElementById("cancelButton").addEventListener("click", e => {
-        // Send data to server and render errors on interface if any
+    const editForm = document.getElementById("editForm");
+    document.getElementById("saveButton").addEventListener("click", async (e) => {
+        const formData = new FormData(editForm);
+        const res = await fetch(baseUrl + "/api/editProfile", {
+            method: "post",
+            body: JSON.stringify(Object.fromEntries(formData)),
+            mode: "cors",
+            headers: new Headers({
+                "Content-Type": "application/json",
+            }),
+        });
+        const resBody = await res.json();
+        if (resBody.success){
+            window.location.reload();
+            return;
+        }
+
+        let errorField = document.getElementById(`${resBody.field}Error`);
+        errorField.innerText = resBody.error;
+        return;
     });
 
     // Available bed modification feature
@@ -196,13 +239,13 @@
 
     let changeCounter = 0;
     let requestTimer = null;
-    const maxBedCount = document.getElementById("maxBeds");
+    const maxBedCount = document.getElementById("hospitalMaxBeds");
     const availableBedCount = document.getElementById("availableBedCount");
     const customBedCount = document.getElementById("customBedCount");
     const customBedCountError = document.getElementById("customBedCountError");
     customBedCount.addEventListener("input", function(event){
         let inputValue = this.value;
-        inputValue = inputValue.replace(/[^0-9\b]/g,"0");
+        inputValue = inputValue.replace(/[^0-9\b]/g,"");
         this.value = inputValue;
     });
 

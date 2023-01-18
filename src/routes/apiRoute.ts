@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { Router } from "express";
-import { changeBedValue, login, logout, register, registerEmail, streamHospitalUpdates, verifyEmail } from '../controller/userController';
+import { changeBedValue, editProfile, login, logout, register, registerEmail, streamHospitalUpdates, verifyEmail } from '../controller/userController';
 import { authenticate } from "../middleware/checkAuthorization";
 import multer from "multer";
 
@@ -17,8 +17,6 @@ const storage = multer.diskStorage({
 });
 const upload = multer({storage});
 
-const registerBody = multer
-
 // Continues /api calls
 router.post("/login", login);
 router.post("/register", upload.single("image"), register);
@@ -27,5 +25,6 @@ router.post("/changeBedValue", authenticate, changeBedValue);
 router.get("/streamHospitalUpdates", streamHospitalUpdates);
 router.post("/registerEmail", registerEmail);
 router.get("/verify", verifyEmail);
+router.post("/editProfile", authenticate, editProfile);
 
 export default router;

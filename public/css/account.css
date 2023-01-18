@@ -181,7 +181,7 @@ main{
     }
 }
 
-.detailsList .detail::after, .detailsList .detailInputWrapper::after{
+.detailsList .detail::after{
     content: "";
     display: block;
     height: 1px;
