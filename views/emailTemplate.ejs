@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+        :root{
+            --headerHeight: 7%;
+            --hospitalFont: 1.125rem;
+            --bedsFont: 1.50rem;
+            --shadow-filter: 0.5px 0.5px 0.5px #222;
+        }
+
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            text-decoration: none;
+            box-sizing: border-box;
+        }
+
+        html, body{
+            height: 100%;
+            background-color: white;
+        }
+
+        a, button{
+            all: unset;
+            cursor: pointer;
+            color: white;
+        }
+
+        #wrapper{
+            font-family: 'Rajdhani', sans-serif;
+            height: 100%;
+        }
+
+        .whiteText{
+            color: white;
+        }
+
+        main{
+            height: 100%;
+            width: 50%;
+            text-align: center;
+        }
+
+        .upperText{
+            font-size: 2rem;
+            font-weight: 700;
+            padding-top: 0.25rem;
+            padding-bottom: 0.5rem;
+            width: 85%;
+        }
+
+        .upperText::after{
+            content: "";
+            display: block;
+            height: 1px;
+            width: 100%;
+            margin: 0.25rem auto 0.5rem auto;
+            background: #cccccc;
+        }
+
+        .lowerText{
+            font-size: 1.15rem;
+        }
+
+        .buttonWrapper{
+            margin-top: 2rem;
+            width: 90%;
+            color: white;
+            display: block;
+            margin-inline: auto;
+        }
+
+        .verifyButton{
+            border-radius: 4px;
+            padding: 0.25rem 0;
+            text-align: center;
+            font-weight: 500;
+            font-size: 1.5rem;
+            width: 100%;
+            background-color: #01224f;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <main>
+            <p class="upperText">Verify your email address</p>
+            <p class="lowerText">
+                Hi! Thank you for registering an account in Hospital Bed Finder. Before 
+                you could get started, we just need confirmation that this is you. Click 
+                the button below to verify that this is your email address:
+            </p>
+            <div class="buttonWrapper">
+                <button id="verifyButton" class="verifyButton">
+                    <a href="<%= verifyLink %>">
+                        Verify your email address
+                    </a>
+                </button>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

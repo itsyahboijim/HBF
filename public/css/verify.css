@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --headerHeight: 7%;
+    --hospitalFont: 1.125rem;
+    --bedsFont: 1.50rem;
+    --shadow-filter: 0.5px 0.5px 0.5px #222;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    background-color: #deeaf8;
+}
+
+button{
+    all: unset;
+    cursor: pointer;
+}
+
+#wrapper{
+    font-family: 'Rajdhani', sans-serif;
+    height: 100%;
+}
+
+header{
+    background-color: #01224f;
+    width: 100%;
+    height: var(--headerHeight);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+
+.whiteText{
+    color: white;
+}
+
+.feedHeader{
+    display: flex;
+    width: 100%;
+    padding-top: 0.5rem;
+    height: 3rem;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.feedHeader a:hover{
+    color: white;
+}
+
+.logo{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo > div{
+    display: flex;
+    height: 100%;
+    width: auto;
+}
+
+.logo > div > img{
+    height: 100%;
+    width: auto;
+}
+
+.nameLower{
+    font-size: 0.7em;
+}
+
+main{
+    height: 93%;
+}
+
+.verifyWrapper{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin-inline: auto;
+    background-color: white;
+    width: 40%;
+    height: 60%;
+    box-shadow: 0 0px 20px rgba(49,54,68, 0.15);
+}
+
+.verify{
+    padding: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.imageWrapper{
+    width: 8rem;
+    height: auto;
+}
+
+.imageWrapper img{
+    width: 100%;
+    height: auto;
+}
+
+.upperText{
+    font-size: 2rem;
+    font-weight: 700;
+    padding-top: 0.25rem;
+    padding-bottom: 0.5rem;
+    width: 85%;
+}
+
+.upperText::after{
+    content: "";
+    display: block;
+    height: 1px;
+    width: 100%;
+    margin: 0.25rem auto 0.5rem auto;
+    background: #cccccc;
+}
+
+.lowerText{
+    font-size: 1.15rem;
+}
+
+.buttonWrapper{
+    margin-top: 2rem;
+    width: 90%;
+    color: white;
+}
+
+.returnButton{
+    border-radius: 4px;
+    padding: 0.25rem 0;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.5rem;
+    transition: all 0.25s ease-in-out;
+    width: 100%;
+    background-color: #01224f;
+}
+
+.returnButton:active{
+    transform: scale(0.95);
+}

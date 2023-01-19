@@ -4,9 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/images/logo.png">
+    <link rel="stylesheet" href="/css/verify.css">
     <title>Verification</title>
 </head>
 <body>
-    <p>Please verify your account</p>
+    <div id="wrapper">
+        <header>
+            <div class="feedHeader">
+                <div class="logo">
+                    <div>
+                        <img src="/images/logo.png" alt="HBF_LOGO">
+                    </div>
+                    <h1 class="logoName">
+                        <a class="whiteText" href="https://hospitalbedfinder.com">H<span class="nameLower">ospital</span> B<span class="nameLower">ed</span> F<span class="nameLower">inder</span></a>
+                    </h1>    
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="verifyWrapper">
+                <div class="verify">
+                    <div class="imageWrapper">
+                        <img src="/images/pendingEmail.png" alt="Pending email">
+                    </div>
+                    <p class="upperText">Please verify your email address</p>
+                    <p class="lowerText">
+                        To continue further and access the features of Hospital Bed Finder beyond 
+                        this point, we request that you verify your email through the confirmation 
+                        that we sent to your email address.
+                    </p>
+                    <div class="buttonWrapper">
+                        <button id="homeButton" class="returnButton">Back to homepage</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
+<script>
+    let baseUrl = window.location.origin;
+
+    document.getElementById("homeButton").addEventListener("click", e => {
+        window.location.href = `${baseUrl}/interface/hospitalFeed`;
+        return;
+    });
+</script>
 </html>

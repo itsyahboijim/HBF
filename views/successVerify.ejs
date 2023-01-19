@@ -4,15 +4,50 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="icon" type="image/x-icon" href="/images/logo.png">
+    <link rel="stylesheet" href="/css/successVerify.css">
+    <title>Successful Verification</title>
 </head>
 <body>
-    <p>Email verification successful!</p>
-    <p>You will be redirected to the account page in 5 seconds...</p>
+    <div id="wrapper">
+        <header>
+            <div class="feedHeader">
+                <div class="logo">
+                    <div>
+                        <img src="/images/logo.png" alt="HBF_LOGO">
+                    </div>
+                    <h1 class="logoName">
+                        <a class="whiteText" href="https://hospitalbedfinder.com">H<span class="nameLower">ospital</span> B<span class="nameLower">ed</span> F<span class="nameLower">inder</span></a>
+                    </h1>    
+                </div>
+            </div>
+        </header>
+        <main>
+            <div class="verifyWrapper">
+                <div class="verify">
+                    <div class="imageWrapper">
+                        <img src="/images/verifyEmail.png" alt="Verify email">
+                    </div>
+                    <p class="upperText">Successful email verification</p>
+                    <p class="lowerText">
+                        Thank you for verifying your email address! We hope that you will have a 
+                        pleasant experience in utilizing the features of Hospital Bed Finder.
+                    </p>
+                    <p class="redirectText">You will be redirected to the account page in <span id="countdown">5</span> second(s).</p>
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
 <script>
     let baseUrl = window.location.origin;
 
+    let countdown = document.getElementById("countdown");
+    setInterval(() => {
+        if (parseInt(countdown.innerText) > 0){
+            countdown.innerText = parseInt(countdown.innerText) - 1;
+        }
+    }, 1000);
     setTimeout(() => {
         window.location.href = baseUrl + "/interface/account";
     }, 5000);
