@@ -45,6 +45,7 @@
             <div class="spacer"></div>
         </header>
         <main>
+            <h1 id="noHospitalsText" class="noneIndicator <% if (hospitals.length > 0) { %>hide<% } %>">No hospitals found</h1>
             <div class="hospitalsContainer" id="hospitalsDiv">
                 <% hospitals.forEach(hospital => { %>
                     <% if (hospital.validated) { %>
@@ -314,25 +315,29 @@
         return;
     }
 
-    // Experimental (DO NOT USE FOR NOW, UNFINISHED)
-    /*
-    let availableBedsDivs = document.querySelectorAll(".availableBedsBar");
-    availableBedsDivs.forEach(availableBedsDiv => {
-        let mutationObserver = new MutationObserver(mutation => {
-            console.log(mutation);
-        });
-
-        mutationObserver.observe(availableBedsDiv, {
-            subtree: true,
-            childList: true,
-            characterData: true,
-            characterDataOldValue: true,
-        });
-        console.log("Mutation observer set");
-    });
-    */
-
     let hospitalSource = new EventSource(`${baseUrl}/api/streamHospitalUpdates`);
     hospitalSource.onmessage = UpdateHospital;
+
+    // "No hospitals found" display
+    let noHospitalsIndicator = document.getElementById("noHospitalsText");
+    let hospitalsDiv = document.getElementById("hospitalsDiv");
+    let mutationObserver = new MutationObserver(mutation => {
+        let hospitals = document.querySelectorAll(".hospitalBox");
+        let hiddenHospitals = document.querySelectorAll(".hospitalBox.hide");
+        console.log("Hospitals length: " + hospitals.length);
+        console.log("Hidden length: " + hiddenHospitals.length);
+        if (hospitals.length != hiddenHospitals.length){
+            noHospitalsIndicator.classList.toggle("hide", true);
+        }
+        else {
+            noHospitalsIndicator.classList.toggle("hide", false);
+        }
+    });
+
+    mutationObserver.observe(hospitalsDiv, {
+        subtree: true,
+        childList: true,
+        attributes: true,
+    });
 </script>
 </html>

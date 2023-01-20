@@ -31,6 +31,10 @@ div.hide{
     display: none;
 }
 
+#noHospitalsText.hide{
+    display: none;
+}
+
 #wrapper{
     font-family: 'Rajdhani', sans-serif;
 }
@@ -157,6 +161,13 @@ header{
 /* Main content */
 main{
     margin-top: -4.5rem;
+}
+
+.noneIndicator{
+    margin-top: 5rem;
+    font-size: 4rem;
+    color: #003f9786;
+    text-align: center;
 }
 
 .hospitalsContainer{
