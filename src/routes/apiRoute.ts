@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { Router } from "express";
-import { changeBedValue, editProfile, login, logout, register, registerEmail, streamHospitalUpdates, verifyEmail } from '../controller/userController';
+import { changeBedValue, editProfile, editProfilePicture, login, logout, register, registerEmail, streamHospitalUpdates, verifyEmail } from '../controller/userController';
 import { authenticate } from "../middleware/checkAuthorization";
 import multer from "multer";
 
@@ -26,5 +26,6 @@ router.get("/streamHospitalUpdates", streamHospitalUpdates);
 router.post("/registerEmail", registerEmail);
 router.get("/verify", verifyEmail);
 router.post("/editProfile", authenticate, editProfile);
+router.post("/editProfilePicture", authenticate, upload.single("image"), editProfilePicture);
 
 export default router;

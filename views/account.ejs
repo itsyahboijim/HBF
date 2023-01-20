@@ -38,6 +38,16 @@
             <div class="accountWrapper">
                 <div class="imageWrapper">
                     <img src="<%= image %>" alt="Hospital image">
+                    <div class="imageInputWrapper">
+                        <div class="imageInput">
+                            <form id="imageForm" method="post">
+                                <label for="imageInput" class="inputLabel">
+                                    <input type="file" accept="image/*" name="image" id="imageInput"> 
+                                    <span>Change picture...</span>
+                                </label>
+                            </form>
+                        </div>
+                    </div>
                 </div>
                 <div class="detailsWrapper">
                     <% if (!validated) { %>
@@ -221,6 +231,25 @@
         errorField.innerText = resBody.error;
         return;
     });
+
+    // Edit image function
+    let imageInput = document.getElementById("imageInput");
+    imageInput.onchange = async function(){
+        if(imageInput.value == "") return;
+
+        const imageForm = document.getElementById("imageForm");
+        const formData = new FormData(imageForm);
+        const res = await fetch(baseUrl + "/api/editProfilePicture", {
+            method: "post",
+            body: formData,
+            mode: "cors",
+        });
+        const resBody = await res.json();
+        if (resBody.success){
+            window.location.reload();
+            return;
+        }
+    }
 
     // Available bed modification feature
     document.getElementById("plusOneChangeBedBtn").addEventListener("click", e => {
