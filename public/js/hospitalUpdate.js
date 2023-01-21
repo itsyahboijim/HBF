@@ -161,6 +161,22 @@ function UpdateHospital(e){
                         availableHospitalBedBar.style.backgroundColor = `rgb(${Math.round(249 + (152 * -1 * colorPercentage))}, ${Math.round(193 + (31 * colorPercentage))}, ${Math.round(53 + (65 * colorPercentage))}`;
                     }
                 }
+                else if (key == "maxBeds"){
+                    let availableHospitalBedBar = document.getElementById(`${hospitalData._id}_availableBedsBar`);
+                    let availableHospitalBed = document.getElementById(`${hospitalData._id}_availableBeds`);
+                    
+                    availableBedValue = parseInt(availableHospitalBed.innerText);
+                    let colorPercentage = availableBedValue / hospitalData[key];
+                    
+                    // Red to Yellow range (inclusive to 50%)
+                    if (colorPercentage <= 0.5){
+                        colorPercentage = colorPercentage / 0.5;
+                        availableHospitalBedBar.style.backgroundColor = `rgb(${Math.round(228 + (21 * colorPercentage))}, ${Math.round(94 + (99 * colorPercentage))}, ${Math.round(45 + (8 * colorPercentage))}`;
+                    } else {
+                        colorPercentage = (colorPercentage - 0.5) / 0.5;
+                        availableHospitalBedBar.style.backgroundColor = `rgb(${Math.round(249 + (152 * -1 * colorPercentage))}, ${Math.round(193 + (31 * colorPercentage))}, ${Math.round(53 + (65 * colorPercentage))}`;
+                    }
+                }
 
                 let targetElement = document.getElementById(`${hospitalData._id}_${key}`);
                 if (targetElement){
