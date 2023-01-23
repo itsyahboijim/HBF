@@ -7,7 +7,6 @@ const db = new Database("hospitals");
 const emailRegisterDb = new Database("emailRegister");
 
 export async function hospitalFeed(req: Request, res: Response){
-    await db.injectSampleData();
     const hospitalInfo = await db.collection.find().toArray();
 
     for (let hospital of hospitalInfo){
@@ -42,7 +41,6 @@ export async function account(req: RequestWithID, res: Response){
 
 // For demonstration purposes
 export async function adminValidate(req: Request, res: Response){
-    await emailRegisterDb.injectSampleValidatedEmails();
     const approvedEmails = await emailRegisterDb.collection.find().toArray();
     let unvalidatedHospitals = await db.collection.find().toArray();
     unvalidatedHospitals = unvalidatedHospitals.filter(hospital => !hospital.validated);
