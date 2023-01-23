@@ -46,7 +46,6 @@ export async function adminValidate(req: Request, res: Response){
     unvalidatedHospitals = unvalidatedHospitals.filter(hospital => !hospital.validated);
 
     for (let hospital of unvalidatedHospitals){
-        delete hospital.email;
         delete hospital.password;
     }
 

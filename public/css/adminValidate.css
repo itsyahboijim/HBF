@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+:root{
+    --headerHeight: 7%;
+    --hospitalFont: 1.125rem;
+    --bedsFont: 1.50rem;
+    --shadow-filter: 0.5px 0.5px 0.5px #222;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+html, body{
+    height: 100%;
+    background-color: #deeaf8;
+}
+
+button{
+    all: unset;
+    cursor: pointer;
+}
+
+#wrapper{
+    font-family: 'Rajdhani', sans-serif;
+    height: 100%;
+}
+
+header{
+    background-color: #01224f;
+    width: 100%;
+    height: var(--headerHeight);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    gap: 1rem;
+}
+
+.whiteText{
+    color: white;
+}
+
+.feedHeader{
+    display: flex;
+    width: 100%;
+    padding-top: 0.5rem;
+    height: 3rem;
+    margin: 0 auto;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.feedHeader a:hover{
+    color: white;
+}
+
+.logo{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo > div{
+    display: flex;
+    height: 100%;
+    width: auto;
+}
+
+.logo > div > img{
+    height: 100%;
+    width: auto;
+}
+
+.nameLower{
+    font-size: 0.7em;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.container{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(202, 202, 202);
+}
+
+.unvalidatedCard{
+    background-color: rgb(255, 167, 167);
+    border: 1px solid rgb(255, 124, 124);
+}
+
+.validatedCard{
+    background-color: rgb(173, 255, 173);
+    border: 1px solid rgb(85, 223, 85);
+}
+
+.card div{
+    padding: 0.25rem 0.5rem;
+}
+
+.card p{
+    font-weight: bold;
+}
+
+.normal{
+    font-weight: normal;
+}
+
+.innerWrapper{
+    padding: 0.5rem 0.5rem 0 0.5rem;
+}
+
+.innerWrapper > *{
+    margin-bottom: 0.5rem;
+}
+
+.centerHeader{
+    text-align: center;
+}
+
+.inputWrapper{
+    padding: 0.5rem;
+}
+
+#validateBtn{
+    display: block;
+    background-color: #01224f;
+    color: white;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+#error{
+    color: rgb(255, 48, 48);
+    text-align: center;
+    margin-top: 0.25rem;
+    font-weight: 500;
+}

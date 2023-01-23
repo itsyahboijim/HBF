@@ -5,23 +5,66 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HBF Admin - Email Validation</title>
+    <link rel="stylesheet" href="/css/adminValidate.css">
     <link rel="icon" type="image/x-icon" href="/images/logo.png">
 </head>
 <body>
-    <h1>Validated email addresses</h1>
-    <% approvedEmails.forEach(hospital => { %>
-        <p><%= hospital.email %> </p>
-        <p><%= hospital.validatedOn %> </p>
-    <% }) %>
-    <h1>Unvalidated email addresses</h1>
-    <% unvalidatedHospitals.forEach(hospital => { %>
-        <p><%= hospital.email %> </p>
-        <p><%= hospital.name %> </p>
-    <% }) %>
-
-    <label for="email">Enter validated email: </label>
-    <input type="text" name="email" id="email">
-    <button id="ValidateBtn" onclick="validateEmail()">Validate</button>
+    <div id="wrapper">
+        <header>
+            <div class="feedHeader">
+                <div class="logo">
+                    <div>
+                        <img src="/images/logo.png" alt="HBF_LOGO">
+                    </div>
+                    <h1 class="logoName">
+                        <a class="whiteText" href="https://hospitalbedfinder.com">H<span class="nameLower">ospital</span> B<span class="nameLower">ed</span> F<span class="nameLower">inder</span></a>
+                    </h1>    
+                </div>
+            </div>
+        </header>
+        <main>
+            <div>
+                <h1 class="centerHeader">Unvalidated</h1>
+                <div class="container">
+                    <div class="innerWrapper">
+                        <% unvalidatedHospitals.forEach(hospital => { %>
+                            <div class="unvalidatedCard card">
+                                <div>
+                                    <p><span class="normal">Email: </span><%= hospital.email %> </p>
+                                    <p><span class="normal">Name: </span><%= hospital.name %> </p>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="inputWrapper">
+                    <label for="email">Enter validated email: </label>
+                    <input type="text" name="email" id="email">
+                    <div class="buttonWrapper">
+                        <button id="validateBtn" onclick="validateEmail()">Validate</button>
+                    </div>
+                    <p id="error"></p>
+                </div>
+            </div>
+            <div>
+                <h1 class="centerHeader">Validated</h1>
+                <div class="container">
+                    <div class="innerWrapper">
+                        <% approvedEmails.forEach(hospital => { %>
+                            <div class="validatedCard card">
+                                <div>
+                                    <p><span class="normal">Email: </span><%= hospital.email %> </p>
+                                    <p><span class="normal">Validated on: </span><%= hospital.validatedOn %> </p>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 </body>
 <script>
     let baseUrl = window.location.origin;
@@ -29,7 +72,7 @@
     async function validateEmail(){
         const email = document.getElementById("email").value;
         const emailObj = {email: email};
-        await fetch(baseUrl + "/api/registerEmail", {
+        const res = await fetch(baseUrl + "/api/registerEmail", {
             method: "post",
             body: JSON.stringify(emailObj),
             mode: "cors",
@@ -37,7 +80,12 @@
                 "Content-Type": "application/json",
             }),
         });
-        window.location.reload();
+        const resBody = await res.json();
+        if (resBody.success){
+            window.location.reload();
+            return;
+        }
+        document.getElementById("error").innerText = resBody.error;
     }
 </script>
 </html>
