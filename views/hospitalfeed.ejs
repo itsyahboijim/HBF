@@ -45,7 +45,7 @@
             <div class="spacer"></div>
         </header>
         <main>
-            <h1 id="noHospitalsText" class="noneIndicator <% if (hospitals.length > 0) { %>hide<% } %>">No hospitals found</h1>
+            <h1 id="noHospitalsText" class="noneIndicator <%= hospitals.length > 0 ? 'hide' : '' %>">No hospitals found</h1>
             <div class="hospitalsContainer" id="hospitalsDiv">
                 <% hospitals.forEach(hospital => { %>
                     <% if (hospital.validated) { %>
