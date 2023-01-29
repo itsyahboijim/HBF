@@ -7,6 +7,9 @@ const db = new Database("hospitals");
 const emailRegisterDb = new Database("emailRegister");
 
 export async function hospitalFeed(req: Request, res: Response){
+    await db.injectSampleValidatedEmails();
+    await db.injectSampleData();
+    
     const hospitalInfo = await db.collection.find({validated: true}).toArray();
 
     for (let hospital of hospitalInfo){
