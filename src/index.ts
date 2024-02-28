@@ -1,5 +1,6 @@
 'use strict';
 
+import 'dotenv/config'
 import websiteConfig from './config/websiteConfig';
 
 import apiRoute from './routes/apiRoute';
