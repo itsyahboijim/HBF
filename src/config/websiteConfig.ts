@@ -1,5 +1,4 @@
-const sitePort = 8080;
 export default {
-    port: sitePort,
-    baseUrl: `localhost`,
+    port: parseInt(<string>process.env.PORT) || 8080,
+    baseUrl: process.env.BASE_URL,
 }
