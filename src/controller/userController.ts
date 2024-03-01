@@ -65,7 +65,7 @@ export async function login(req: Request, res: Response){
             expiresIn: jwtConfig.duration,
         }
     );
-    // res.cookie("authorization", accessToken);
+    res.cookie("authorization", accessToken);
     res.status(200).send({
         success: true,
         accessToken,
