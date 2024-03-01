@@ -23,3 +23,11 @@ and has no active users.
 1. Clone the repository and install all its dependencies via npm (execute `npm install` from home directory)
 2. Deploy the database (MongoDB) that the project uses via `docker compose up -d`
 3. Run the server via the command `npm run dev`
+
+## Roadmap
+
+I am currently learning React so, in this repository's `backend` branch it will be repurposed as a backend server for the React frontend. Such is to be accomplished:
+
+- [ ] Throw errors on routes beginning with `/interface`
+- [ ] Disable browser cookie interactions
+- [ ] Modify redirects to throw an error instead
