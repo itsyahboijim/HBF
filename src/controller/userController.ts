@@ -75,8 +75,8 @@ export async function login(req: Request, res: Response){
 
 export async function logout(req: Request, res: Response){
     res.clearCookie("authorization");
-    // res.redirect(websiteConfig.baseUrl + "/interface/login");
-    res.status(200).send({success: true});
+    res.redirect("/interface/login");
+    // res.status(200).send({success: true});
 }
 
 export async function register(req: Request, res: Response){
@@ -302,7 +302,7 @@ export async function verifyEmail(req: Request, res: Response){
             success: false,
             error: "No ID provided in query!",
         });
-        // res.redirect(`${websiteConfig.baseUrl}/interface/account`);
+        // res.redirect("/interface/account");
         return;
     }
 
@@ -317,7 +317,7 @@ export async function verifyEmail(req: Request, res: Response){
                     success: false,
                     error: "Something went wrong. Please try again.",
                 });
-                // res.redirect(`${websiteConfig.baseUrl}/interface/account`);
+                // res.redirect("/interface/account");
                 return;
             }
 
