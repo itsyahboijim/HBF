@@ -24,10 +24,20 @@ and has no active users.
 2. Deploy the database (MongoDB) that the project uses via `docker compose up -d`
 3. Run the server via the command `npm run dev`
 
-## Roadmap
+## Roadmap / Improvements
 
-I am currently learning React so, in this repository's `backend` branch it will be repurposed as a backend server for the React frontend. Such is to be accomplished:
+I am currently learning React so, in this repository's `backend` branch
+it will be repurposed as a backend server for the React frontend.
+Such is to be accomplished:
 
 - [ ] Throw errors on routes beginning with `/interface`
 - [ ] Disable browser cookie interactions
 - [ ] Modify redirects to throw an error instead
+
+In addition, this project was one of the first few projects I had, and as
+I have grown as a developer, certain implementations that I have applied here
+are becoming unscratchable itches that I must resolve. As such, the following
+improvements are to be accomplshed:
+
+- [ ] Change database connection implementation to be more flexible
+- [ ] Apply a hashing algorithm for passwords
