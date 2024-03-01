@@ -41,3 +41,9 @@ improvements are to be accomplshed:
 
 - [ ] Change database connection implementation to be more flexible
 - [ ] Apply a hashing algorithm for passwords
+
+[^1]:
+    This repository's commit history is funky because it was rewritten for
+    security purposes, functionality is uncertain past commit [`3263ae7`](https://github.com/itsyahboijim/HBF/commit/3263ae7a2f320975197d52c4a6efee5428993e21)
+
+[^2]: CRITICISM IS WELCOME!!! Please let me know via `Issues` if there are any.
