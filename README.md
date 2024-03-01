@@ -24,10 +24,6 @@ and has no active users.
 2. Deploy the database (MongoDB) that the project uses via `docker compose up -d`
 3. Run the server via the command `npm run dev`
 
-[!WARNING]
-This repository's commit history is funky because it was rewritten for
-security purposes, functionality is uncertain past commit [`3263ae7`](https://github.com/itsyahboijim/HBF/commit/3263ae7a2f320975197d52c4a6efee5428993e21)
-
 ## Roadmap / Improvements
 
 I am currently learning React so, in this repository's `backend` branch
@@ -46,5 +42,8 @@ improvements are to be accomplshed:
 - [ ] Change database connection implementation to be more flexible
 - [ ] Apply a hashing algorithm for passwords
 
-[!NOTE]:
-CRITICISM IS WELCOME!!! Please let me know via `Issues` if there are any.
+## Notes
+
+1. This repository's commit history is funky because it was rewritten for
+   security purposes, functionality is uncertain past commit [`3263ae7`](https://github.com/itsyahboijim/HBF/commit/3263ae7a2f320975197d52c4a6efee5428993e21)
+2. CRITICISM IS WELCOME!!! Please let me know via [issues](https://github.com/itsyahboijim/HBF/issues), if there are any.
