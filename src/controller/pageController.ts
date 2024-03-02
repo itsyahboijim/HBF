@@ -7,12 +7,6 @@ const db = new Database("hospitals");
 const emailRegisterDb = new Database("emailRegister");
 
 export async function hospitalFeed(req: Request, res: Response){
-    console.warn("Homepage interface endpoint called, prevent this from occurring!");
-    res.status(404).send({
-        message: "This endpoint is currently unavailable",
-    });
-    return;
-    
     await db.injectSampleValidatedEmails();
     await db.injectSampleData();
     
@@ -25,6 +19,11 @@ export async function hospitalFeed(req: Request, res: Response){
 
     const hospitals = { hospitals: hospitalInfo };
     // res.render("hospitalfeed", hospitals);
+    res.status(200).send({
+        success: true,
+        hospitals,
+    });
+    return;
 }
 
 export async function login(req: Request, res: Response){
@@ -37,19 +36,18 @@ export async function login(req: Request, res: Response){
 }
 
 export async function account(req: RequestWithID, res: Response){
-    console.warn("Account interface endpoint called, prevent this from occurring!");
-    res.status(404).send({
-        message: "This endpoint is currently unavailable",
-    });
-    return;
     
     const hospitalID = ObjectId(req._id);
     const hospitalData = await db.collection.findOne({_id: hospitalID});
     
     if (hospitalData){
         if (!hospitalData.active){
-            res.clearCookie("authorization");
-            res.render("verify");
+            // res.clearCookie("authorization");
+            // res.render("verify");
+            res.status(400).send({
+                success: false,
+                error: "No hospital matches request ID",
+            })
             return;
         }
 
@@ -57,16 +55,15 @@ export async function account(req: RequestWithID, res: Response){
         delete hospitalData.password;
     }
     // res.render("account", hospitalData as Object);
+    res.status(200).send({
+        success: true,
+        hospitalData,
+    });
+    return;
 }
 
 // For demonstration purposes
 export async function adminValidate(req: Request, res: Response){
-    console.warn("Admin validation interface endpoint called, prevent this from occurring!");
-    res.status(404).send({
-        message: "This endpoint is currently unavailable",
-    });
-    return;
-    
     const approvedEmails = await emailRegisterDb.collection.find().toArray();
     let unvalidatedHospitals = await db.collection.find().toArray();
     unvalidatedHospitals = unvalidatedHospitals.filter(hospital => !hospital.validated);
@@ -79,4 +76,10 @@ export async function adminValidate(req: Request, res: Response){
     //     approvedEmails,
     //     unvalidatedHospitals,
     // });
+    res.status(200).send({
+        success: true,
+        approvedEmails,
+        unvalidatedHospitals,
+    });
+    return;
 }
