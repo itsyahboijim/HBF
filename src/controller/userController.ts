@@ -75,8 +75,8 @@ export async function login(req: Request, res: Response){
 
 export async function logout(req: Request, res: Response){
     // res.clearCookie("authorization");
-    res.redirect("/interface/login");
-    // res.status(200).send({success: true});
+    // res.redirect("/interface/login");
+    res.status(200).send({success: true});
 }
 
 export async function register(req: Request, res: Response){

@@ -6,7 +6,11 @@ import { RequestWithID } from '../types';
 export async function authenticate(req: Request, res: Response, next: Function){
     const { authorization } = req.cookies;
     if (!authorization){
-        res.redirect("/interface/login");
+        // res.redirect("/interface/login");
+        res.status(400).send({
+            success: false,
+            error: "Something went wrong. Please try again."
+        });
         return;
     }
     
@@ -16,7 +20,12 @@ export async function authenticate(req: Request, res: Response, next: Function){
         async (err: any, userData: any) => {
             if (err){
                 // res.clearCookie("authorization");
-                res.redirect("/interface/login");
+                // res.redirect("/interface/login");
+                
+                res.status(400).send({
+                    success: false,
+                    error: "Something went wrong. Please try again."
+                });
                 return;
             }
             (req as RequestWithID)._id = userData._id;
