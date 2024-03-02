@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { RequestWithID } from '../types';
 
 export async function authenticate(req: Request, res: Response, next: Function){
-    const { authorization } = req.cookies;
+    const authorization = req.headers.authorization;
     if (!authorization){
         // res.redirect("/interface/login");
         res.status(400).send({
