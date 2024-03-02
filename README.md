@@ -30,9 +30,10 @@ I am currently learning React so, in this repository's `backend` branch
 it will be repurposed as a backend server for the React frontend.
 Such is to be accomplished:
 
-- [ ] Throw errors on routes beginning with `/interface`
-- [ ] Disable browser cookie interactions
-- [ ] Modify redirects to throw an error instead
+- [x] Disable browser cookie interactions
+- [x] Modify redirects to return data instead
+- [x] Change JWT verification to take JWT from request headers and not cookies
+- [x] Modify the responses of certain API endpoints
 
 In addition, this project was one of the first few projects I had, and as
 I have grown as a developer, certain implementations that I have applied here
