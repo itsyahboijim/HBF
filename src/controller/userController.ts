@@ -204,7 +204,9 @@ export async function changeBedValue(req: RequestWithID, res: Response){
 
     const hospitalID = ObjectId(req._id);
     db.collection.updateOne({_id: hospitalID}, { $inc: { availableBeds: changeValue }});
-    res.end();
+    res.status(200).send({
+        success: true,
+    });
 
     const hospitalData = await db.collection.findOne({_id: hospitalID});
     if(hospitalData?.validated){
