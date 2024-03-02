@@ -7,6 +7,12 @@ const db = new Database("hospitals");
 const emailRegisterDb = new Database("emailRegister");
 
 export async function hospitalFeed(req: Request, res: Response){
+    console.warn("Homepage interface endpoint called, prevent this from occurring!");
+    res.status(404).send({
+        message: "This endpoint is currently unavailable",
+    });
+    return;
+    
     await db.injectSampleValidatedEmails();
     await db.injectSampleData();
     
@@ -18,14 +24,25 @@ export async function hospitalFeed(req: Request, res: Response){
     }
 
     const hospitals = { hospitals: hospitalInfo };
-    res.render("hospitalfeed", hospitals);
+    // res.render("hospitalfeed", hospitals);
 }
 
 export async function login(req: Request, res: Response){
-    res.render("login");
+    // res.render("login");
+    console.warn("Login interface endpoint called, prevent this from occurring!");
+    res.status(404).send({
+        message: "This endpoint is currently unavailable",
+    });
+    return;
 }
 
 export async function account(req: RequestWithID, res: Response){
+    console.warn("Account interface endpoint called, prevent this from occurring!");
+    res.status(404).send({
+        message: "This endpoint is currently unavailable",
+    });
+    return;
+    
     const hospitalID = ObjectId(req._id);
     const hospitalData = await db.collection.findOne({_id: hospitalID});
     
@@ -39,11 +56,17 @@ export async function account(req: RequestWithID, res: Response){
         delete hospitalData.email;
         delete hospitalData.password;
     }
-    res.render("account", hospitalData as Object);
+    // res.render("account", hospitalData as Object);
 }
 
 // For demonstration purposes
 export async function adminValidate(req: Request, res: Response){
+    console.warn("Admin validation interface endpoint called, prevent this from occurring!");
+    res.status(404).send({
+        message: "This endpoint is currently unavailable",
+    });
+    return;
+    
     const approvedEmails = await emailRegisterDb.collection.find().toArray();
     let unvalidatedHospitals = await db.collection.find().toArray();
     unvalidatedHospitals = unvalidatedHospitals.filter(hospital => !hospital.validated);
@@ -52,8 +75,8 @@ export async function adminValidate(req: Request, res: Response){
         delete hospital.password;
     }
 
-    res.render("adminValidate", {
-        approvedEmails,
-        unvalidatedHospitals,
-    });
+    // res.render("adminValidate", {
+    //     approvedEmails,
+    //     unvalidatedHospitals,
+    // });
 }
