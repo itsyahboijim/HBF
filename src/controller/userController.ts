@@ -65,7 +65,7 @@ export async function login(req: Request, res: Response){
             expiresIn: jwtConfig.duration,
         }
     );
-    res.cookie("authorization", accessToken);
+    // res.cookie("authorization", accessToken);
     res.status(200).send({
         success: true,
         accessToken,
@@ -74,7 +74,7 @@ export async function login(req: Request, res: Response){
 }
 
 export async function logout(req: Request, res: Response){
-    res.clearCookie("authorization");
+    // res.clearCookie("authorization");
     res.redirect("/interface/login");
     // res.status(200).send({success: true});
 }
@@ -165,7 +165,7 @@ export async function register(req: Request, res: Response){
             expiresIn: jwtConfig.duration,
         }
     );
-    res.cookie("authorization", accessToken);
+    // res.cookie("authorization", accessToken);
     res.status(200).send({
         success: true,
     });
@@ -312,7 +312,7 @@ export async function verifyEmail(req: Request, res: Response){
         (e: any, decoded: any) => {
             if (e){
                 console.log(e);
-                res.clearCookie("authorization");
+                // res.clearCookie("authorization");
                 res.status(400).send({
                     success: false,
                     error: "Something went wrong. Please try again.",
@@ -349,7 +349,7 @@ export async function verifyEmail(req: Request, res: Response){
             expiresIn: jwtConfig.duration,
         }
     );
-    res.cookie("authorization", accessToken);
+    // res.cookie("authorization", accessToken);
     res.status(200).send({verify: true});
     return;
 }
@@ -389,7 +389,7 @@ export async function editProfile(req: RequestWithID, res: Response){
             field: "request",
             error: "Something went wrong.",
         });
-        res.clearCookie("authorization");
+        // res.clearCookie("authorization");
         return;
     }
 

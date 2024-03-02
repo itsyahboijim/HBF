@@ -15,7 +15,7 @@ export async function authenticate(req: Request, res: Response, next: Function){
         jwtConfig.secret,
         async (err: any, userData: any) => {
             if (err){
-                res.clearCookie("authorization");
+                // res.clearCookie("authorization");
                 res.redirect("/interface/login");
                 return;
             }
