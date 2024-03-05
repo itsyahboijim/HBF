@@ -26,7 +26,7 @@ and has no active users.
 
 ## Roadmap / Improvements
 
-I am currently learning React so, in this repository's `backend` branch
+I am currently learning React so, in this repository's `mode/backend` branch
 it will be repurposed as a backend server for the React frontend.
 Such is to be accomplished:
 
