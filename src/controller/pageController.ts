@@ -11,13 +11,16 @@ export async function hospitalFeed(req: Request, res: Response){
     await db.injectSampleData();
     
     const hospitalInfo = await db.collection.find({validated: true}).toArray();
+    const hospitals: Record<string, any> = {};
 
     for (let hospital of hospitalInfo){
         delete hospital.email;
         delete hospital.password;
+
+        hospitals[hospital._id.toString()] = hospital;
+        delete hospitals[hospital._id.toString()]._id;
     }
 
-    const hospitals = { hospitals: hospitalInfo };
     // res.render("hospitalfeed", hospitals);
     res.status(200).send({
         success: true,
