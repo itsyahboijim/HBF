@@ -284,8 +284,11 @@ export async function registerEmail(req: Request, res: Response){
         if (account && account.active){
             delete account.email;
             delete account.password;
-            account.mode = "add";
-            sendHospitalUpdates(account);
+            
+            sendHospitalUpdates({
+                mode: "add",
+                hospital: account,
+            });
         }
     }
 
@@ -336,8 +339,11 @@ export async function verifyEmail(req: Request, res: Response){
     if(updatedProfile && updatedProfile.validated){
         delete updatedProfile.email;
         delete updatedProfile.password;
-        updatedProfile.mode = "add";
-        sendHospitalUpdates(updatedProfile);
+        
+        sendHospitalUpdates({
+            mode: "add",
+            hospital: updatedProfile,
+        });
     }
 
     const accessToken = jwt.sign(
@@ -419,9 +425,13 @@ export async function editProfile(req: RequestWithID, res: Response){
         await db.collection.updateOne({_id: hospitalID}, {$set: profileUpdates});
     }
 
-    profileUpdates.mode = "edit";
     profileUpdates._id = req._id;
-    sendHospitalUpdates(profileUpdates);
+    const { _id, ...profileInfo } = profileUpdates;
+    sendHospitalUpdates({
+        mode: "edit",
+        _id,
+        newHospitalInfo: profileInfo,
+    });
     
     res.status(200).send({
         success: true,
