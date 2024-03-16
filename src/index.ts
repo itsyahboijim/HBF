@@ -13,10 +13,12 @@ import { parseCookies } from './middleware/parseCookies';
 const ejs = require('ejs');
 const app = express();
 const path = require('path');
+const cors = require('cors');
 
 app.engine("html", ejs.renderFile);
 app.set("view engine", "ejs");
 
+app.use(cors());
 app.use(parseCookies);
 app.use(express.json({limit: "50mb"}));
 app.use(express.urlencoded({extended: true}));
