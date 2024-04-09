@@ -20,7 +20,7 @@ const upload = multer({storage});
 // Continues /api calls
 router.post("/login", login);
 router.post("/register", upload.single("image"), register);
-router.get("/logout", logout);
+router.post("/logout", logout);
 router.post("/changeBedValue", authenticate, changeBedValue);
 router.get("/streamHospitalUpdates", streamHospitalUpdates);
 router.post("/registerEmail", registerEmail);
