@@ -65,16 +65,19 @@ export async function login(req: Request, res: Response){
             expiresIn: jwtConfig.duration,
         }
     );
-    // res.cookie("authorization", accessToken);
+    res.cookie("authorization", accessToken, {
+        httpOnly: true,
+        // secure: true,
+    });
+
     res.status(200).send({
         success: true,
-        accessToken,
     });
     return;
 }
 
 export async function logout(req: Request, res: Response){
-    // res.clearCookie("authorization");
+    res.clearCookie("authorization");
     // res.redirect("/interface/login");
     res.status(200).send({success: true});
 }
