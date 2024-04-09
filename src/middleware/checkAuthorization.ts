@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { RequestWithID } from '../types';
 
 export async function authenticate(req: Request, res: Response, next: Function){
-    const authorization = req.headers.authorization;
+    const authorization = req.cookies.authorization;
     if (!authorization){
         // res.redirect("/interface/login");
         res.status(400).send({
@@ -19,7 +19,7 @@ export async function authenticate(req: Request, res: Response, next: Function){
         jwtConfig.secret,
         async (err: any, userData: any) => {
             if (err){
-                // res.clearCookie("authorization");
+                res.clearCookie("authorization");
                 // res.redirect("/interface/login");
                 
                 res.status(400).send({
