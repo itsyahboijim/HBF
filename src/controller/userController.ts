@@ -72,6 +72,7 @@ export async function login(req: Request, res: Response){
 
     res.status(200).send({
         success: true,
+        active: profile.active,
     });
     return;
 }
@@ -182,7 +183,7 @@ export async function register(req: Request, res: Response){
             expiresIn: jwtConfig.duration,
         }
     );
-    const verifyLink = `${websiteConfig.baseUrl}/api/verify?id=${mailToken}`;
+    const verifyLink = `${process.env.FRONTEND_SERVER_URL}/verify?id=${mailToken}`;
     console.log(`Verify email for ${name}: `, verifyLink);
     const emailTemplate = fs.readFileSync(`${__dirname}/../../views/emailTemplate.ejs`, "utf-8");
     const renderedTemplate = ejs.render(emailTemplate, { verifyLink });
@@ -302,7 +303,7 @@ export async function registerEmail(req: Request, res: Response){
 }
 
 export async function verifyEmail(req: Request, res: Response){
-    const idToken: any = req.query.id;
+    const { idToken } = req.params;
     let id: any;
 
     if(!idToken){
@@ -313,31 +314,34 @@ export async function verifyEmail(req: Request, res: Response){
         // res.redirect("/interface/account");
         return;
     }
-
-    jwt.verify(
-        idToken, 
-        jwtConfig.verificationSecret, 
-        (e: any, decoded: any) => {
-            if (e){
-                console.log(e);
-                // res.clearCookie("authorization");
-                res.status(400).send({
-                    success: false,
-                    error: "Something went wrong. Please try again.",
-                });
-                // res.redirect("/interface/account");
-                return;
-            }
-
-            id = decoded.id;
-        }
-    );
     
-    const updateStatus = await db.collection.updateOne({_id: ObjectId(id), active: false}, {$set: {active: true}});
-    if (updateStatus.matchedCount == 0){
+    try {
+        jwt.verify(
+            idToken, 
+            jwtConfig.verificationSecret, 
+            (e: any, decoded: any) => {
+                if (e){
+                    // res.clearCookie("authorization");
+                    res.status(400).send({
+                        success: false,
+                        error: "Something went wrong. Please try again.",
+                    });
+                    // res.redirect("/interface/account");
+                    throw e;
+                }
+    
+                id = decoded.id;
+            }
+        );
+    } catch (error) {
+        console.error("JWT error: ", error);
         return;
     }
-
+    
+    
+    const updateStatus = await db.collection.updateOne({_id: ObjectId(id), active: false}, {$set: {active: true}});
+    const { modifiedCount } = updateStatus;
+    
     const updatedProfile = await db.collection.findOne({_id: ObjectId(id)});
     if(updatedProfile && updatedProfile.validated){
         delete updatedProfile.email;
@@ -349,19 +353,24 @@ export async function verifyEmail(req: Request, res: Response){
         });
     }
 
-    const accessToken = jwt.sign(
-        {
-            _id: id,
-            validated: updatedProfile?.validated,
-            iat: Date.now(),
-        },
-        jwtConfig.secret,
-        {
-            expiresIn: jwtConfig.duration,
-        }
-    );
-    // res.cookie("authorization", accessToken);
-    res.status(200).send({verify: true});
+    if (modifiedCount > 0) {
+        const accessToken = jwt.sign(
+            {
+                _id: id,
+                validated: updatedProfile?.validated,
+                iat: Date.now(),
+            },
+            jwtConfig.secret,
+            {
+                expiresIn: jwtConfig.duration,
+            }
+        );
+        res.cookie("authorization", accessToken, {
+            httpOnly: true,
+        });
+    }
+    
+    res.status(200).send({success: true});
     return;
 }
 
