@@ -24,7 +24,7 @@ router.post("/logout", logout);
 router.post("/changeBedValue", authenticate, changeBedValue);
 router.get("/streamHospitalUpdates", streamHospitalUpdates);
 router.post("/registerEmail", registerEmail);
-router.get("/verify", verifyEmail);
+router.patch("/verify/:idToken", verifyEmail);
 router.post("/editProfile", authenticate, editProfile);
 router.post("/editProfilePicture", authenticate, upload.single("image"), editProfilePicture);
 
