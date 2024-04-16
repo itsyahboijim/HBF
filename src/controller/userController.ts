@@ -153,7 +153,7 @@ export async function register(req: Request, res: Response){
 
     // Check if there is an uploaded image
     if (req.file){
-        account.image = `/images/${req.file.filename}`;
+        account.image = `/images/hospitals/${req.file.filename}`;
     }
     else {
         account.image = `/images/default.jpeg`;
@@ -461,7 +461,7 @@ export async function editProfile(req: RequestWithID, res: Response){
 
 export async function editProfilePicture(req: RequestWithID, res: Response){
     const hospitalID = ObjectId(req._id);
-    const imagePath = `/images/${req.file?.filename}`;
+    const imagePath = `/images/hospitals/${req.file?.filename}`;
 
     await db.collection.updateOne({_id: hospitalID}, {$set: {image: imagePath}});
     

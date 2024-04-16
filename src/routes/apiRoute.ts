@@ -6,9 +6,11 @@ import multer from "multer";
 
 const router = Router();
 
+const fs = require("fs");
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, `${__dirname}/../../public/images`);
+        fs.mkdirSync(`${__dirname}/../../public/images/hospitals`, {recursive: true});
+        cb(null, `${__dirname}/../../public/images/hospitals`);
     },
     filename: (req, file, cb) => {
         const fileExtension = file.mimetype.split("/")[1];
