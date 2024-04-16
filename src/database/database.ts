@@ -4,8 +4,12 @@ import bcrypt from 'bcrypt';
 const saltRounds = 10;
 
 export class Database{
-    private readonly mongodbUrl: string = "mongodb://localhost:27017";
-    private readonly client: MongoClient = new MongoClient(this.mongodbUrl);
+    private readonly client: MongoClient = new MongoClient(process.env.DB_HOST ?? "", {
+        auth: {
+            username: process.env.DB_USERNAME,
+            password: process.env.DB_PASSWORD,
+        }
+    });
     private readonly collectionName: string = "";
     // @ts-expect-error
     collection: Collection;
