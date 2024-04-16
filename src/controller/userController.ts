@@ -4,10 +4,12 @@ import jwt from 'jsonwebtoken';
 import jwtConfig from '../config/jwtConfig';
 import websiteConfig from '../config/websiteConfig';
 import { RequestWithID } from '../types';
+import bcrypt from 'bcrypt';
 
 const ejs = require('ejs');
 const juice = require('juice');
 const fs = require("fs");
+const saltRounds = 10;
 
 const { ObjectId } = require('mongodb');
 const db = new Database("hospitals");
@@ -46,7 +48,7 @@ export async function login(req: Request, res: Response){
     }
 
     // Check if queried password is equal to inputted password
-    if (profile.password !== password){
+    if (!bcrypt.compare(password, profile.password)){
         res.status(400).send({
             success: false,
             error: "Something went wrong.",
@@ -158,17 +160,23 @@ export async function register(req: Request, res: Response){
     }
 
     account.active = false;
+    account.password = await new Promise((resolve, reject) => {
+        bcrypt.hash(account.password, saltRounds, function(err, hash) {
+            if (err) reject(err);
+            resolve(hash);
+        });
+    });
     const insertStatus = await db.collection.insertOne(account);
-    const accessToken = jwt.sign(
-        {
-            _id: insertStatus.insertedId.toString(),
-            iat: Date.now(),
-        },
-        jwtConfig.secret,
-        {
-            expiresIn: jwtConfig.duration,
-        }
-    );
+    // const accessToken = jwt.sign(
+    //     {
+    //         _id: insertStatus.insertedId.toString(),
+    //         iat: Date.now(),
+    //     },
+    //     jwtConfig.secret,
+    //     {
+    //         expiresIn: jwtConfig.duration,
+    //     }
+    // );
     // res.cookie("authorization", accessToken);
     res.status(200).send({
         success: true,

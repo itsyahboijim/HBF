@@ -1,4 +1,7 @@
 import { Collection, MongoClient } from 'mongodb';
+import bcrypt from 'bcrypt';
+
+const saltRounds = 10;
 
 export class Database{
     private readonly mongodbUrl: string = "mongodb://localhost:27017";
@@ -103,8 +106,16 @@ export class Database{
 
         const dataCheck = await this.collection.findOne();
         if (!dataCheck){
-            await this.collection.insertMany(sampleData);
-            console.log(`No data found in "hospitals" collection. Injecting sample data.`);        
+            for (const hospital of sampleData) {
+                hospital.password = await new Promise((resolve, reject) => {
+                    bcrypt.hash(hospital.password, saltRounds, (err, hash) => {
+                        if (err) reject(err);
+                        resolve(hash);
+                    });
+                });
+                await this.collection.insertOne(hospital);
+            }
+            console.log(`No data found in "hospitals" collection. Injecting sample data.`);
         }
     }
 
