@@ -40,8 +40,9 @@ I have grown as a developer, certain implementations that I have applied here
 are becoming unscratchable itches that I must resolve. As such, the following
 improvements are to be accomplshed:
 
-- [ ] Change database connection implementation to be more flexible
-- [ ] Apply a hashing algorithm for passwords
+- [x] Change database connection implementation to be more flexible
+- [x] Apply a hashing algorithm for passwords
+- [x] Modify storage for uploaded images to be part of .gitignore
 
 ## Notes
 
