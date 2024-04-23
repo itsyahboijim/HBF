@@ -70,6 +70,7 @@ export async function login(req: Request, res: Response){
     res.cookie("authorization", accessToken, {
         httpOnly: true,
         // secure: true,
+        maxAge: parseInt(process.env.JWT_TTL ?? "60000"),
     });
 
     res.status(200).send({
@@ -375,6 +376,7 @@ export async function verifyEmail(req: Request, res: Response){
         );
         res.cookie("authorization", accessToken, {
             httpOnly: true,
+            maxAge: parseInt(process.env.JWT_TTL ?? "60000"),
         });
     }
     
