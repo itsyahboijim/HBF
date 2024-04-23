@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "concurrently \"tsc -w\" \"nodemon lib/server.js\"",
-    "dev": "concurrently \"tsc -w\" \"nodemon lib/index.js\""
+    "dev": "concurrently \"tsc -w\" \"nodemon lib/index.js\"",
+    "prod": "tsc && node lib/index.js"
   },
   "repository": {
     "type": "git",
