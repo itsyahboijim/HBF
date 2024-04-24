@@ -9,6 +9,9 @@
     "dev": "concurrently \"tsc -w\" \"nodemon lib/index.js\"",
     "prod": "tsc && node lib/index.js"
   },
+  "engines": {
+    "node": ">=20.10.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/itsyahboijim/HBF.git"
