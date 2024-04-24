@@ -92,6 +92,7 @@ jobs:
           env_vars: |
             FRONTEND_SERVER_URL=${{ vars.FRONTEND_SERVER_URL }}
             PORT=${{ vars.PORT }}
+          secrets: |
             DB_HOST=${{ secrets.DB_HOST }}
             DB_USERNAME=${{ secrets.DB_USERNAME }}
             DB_PASSWORD=${{ secrets.DB_PASSWORD }}
@@ -101,6 +102,7 @@ jobs:
             JWT_SECRET=${{ secrets.JWT_SECRET }}
             JWT_VERIFICATION_SECRET=${{ secrets.JWT_VERIFICATION_SECRET }}
             JWT_TTL=${{ secrets.JWT_TTL }}
+          flags: "--max-instances=5"
 
       # If required, use the Cloud Run url output in later steps
       - name: Show Output
