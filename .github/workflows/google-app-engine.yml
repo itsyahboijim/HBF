@@ -42,6 +42,7 @@ jobs:
             JWT_SECRET=${{ secrets.JWT_SECRET }}
             JWT_VERIFICATION_SECRET=${{ secrets.JWT_VERIFICATION_SECRET }}
             JWT_TTL=${{ secrets.JWT_TTL }}
+          flags: "--log-http"
         
       - name: 'test'
         run: 'curl "${{ steps.deploy.outputs.version_url }}"'
