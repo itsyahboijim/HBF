@@ -1,6 +1,6 @@
 .env
 
 /node_modules
-/lib
+dist
 
 public/images/hospitals/*
